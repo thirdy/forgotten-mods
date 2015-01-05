@@ -1,6 +1,7 @@
 javascript:(function(){
 	// Path of Exile Forgotten Mods 0.1 - A simple bookmarklet that will augment poe.trade with more info.
-	// Check out the forum thread - 
+	// Check out the forum thread - http://www.pathofexile.com/forum/edit-thread/1164052
+	// PM me in game: ManicCompression
 	var mod_map = {
 	 "#+# to Armour":{affix:'p'},
 	 "#+# to maximum Life":{affix:'p'},
