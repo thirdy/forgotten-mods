@@ -6,7 +6,7 @@
 	// List of mods taken from the Serach Form > Explicit Combobox
 	// see https://github.com/thirdy/forgotten-mods/blob/master/mods_lister.js which I used to generate these values.
 	var mod_map = {
-	 "# Life Regenerated per second":{affix:'x'},
+	 "# Life Regenerated per secsond":{affix:'s'},
 
 	"# Mana Regenerated per second":{affix:'x'},
 	
@@ -118,11 +118,11 @@
 	
 	"#% increased Area of Effect Radius per 20 Intelligence":{affix:'x'},
 	
-	"#% increased Armour":{affix:'x'},
+	"#% increased Armour":{affix:'p'},
 	
-	"#% increased Armour and Energy Shield":{affix:'x'},
+	"#% increased Armour and Energy Shield":{affix:'p'},
 	
-	"#% increased Armour and Evasion":{affix:'x'},
+	"#% increased Armour and Evasion":{affix:'p'},
 	
 	"#% increased Armour during flask effect":{affix:'x'},
 	
@@ -130,9 +130,9 @@
 	
 	"#% increased Armour while not Ignited, Frozen or Shocked":{affix:'x'},
 	
-	"#% increased Armour, Evasion and Energy Shield":{affix:'x'},
+	"#% increased Armour, Evasion and Energy Shield":{affix:'p'},
 	
-	"#% increased Attack Speed":{affix:'x'},
+	"#% increased Attack Speed":{affix:'s'},
 	
 	"#% increased Attack Speed per 10 Dexterity":{affix:'x'},
 	
@@ -146,7 +146,7 @@
 	
 	"#% increased Burning Damage":{affix:'x'},
 	
-	"#% increased Cast Speed":{affix:'x'},
+	"#% increased Cast Speed":{affix:'s'},
 	
 	"#% increased Cast Speed while Ignited":{affix:'x'},
 	
@@ -168,11 +168,11 @@
 	
 	"#% increased Chill Duration on Enemies when in Off Hand":{affix:'x'},
 	
-	"#% increased Cold Damage":{affix:'x'},
+	"#% increased Cold Damage":{affix:'s'},
 	
 	"#% increased Critical Strike Chance":{affix:'x'},
 	
-	"#% increased Critical Strike Chance for Spells":{affix:'x'},
+	"#% increased Critical Strike Chance for Spells":{affix:'s'},
 	
 	"#% increased Critical Strike Multiplier with Melee Weapons":{affix:'x'},
 	
@@ -234,13 +234,13 @@
 	
 	"#% increased Evasion and Energy Shield":{affix:'x'},
 	
-	"#% increased Evasion Rating":{affix:'x'},
+	"#% increased Evasion Rating":{affix:'p'},
 	
 	"#% increased Evasion Rating during flask effect":{affix:'x'},
 	
 	"#% increased Experience gain":{affix:'x'},
 	
-	"#% increased Fire Damage":{affix:'x'},
+	"#% increased Fire Damage":{affix:'s'},
 	
 	"#% increased Fire Damage taken":{affix:'x'},
 	
@@ -250,9 +250,9 @@
 	
 	"#% increased Fishing Range":{affix:'x'},
 	
-	"#% increased Flask Charges gained":{affix:'x'},
+	"#% increased Flask Charges gained":{affix:'s'},
 	
-	"#% increased Flask effect duration":{affix:'x'},
+	"#% increased Flask effect duration":{affix:'s'},
 	
 	"#% increased Flask Life recovery rate":{affix:'p'},
 	
@@ -264,11 +264,11 @@
 	
 	"#% increased Global Attack Speed per Green Socket":{affix:'x'},
 	
-	"#% increased Global Critical Strike Chance":{affix:'x'},
+	"#% increased Global Critical Strike Chance":{affix:'s'},
 	
 	"#% increased Global Critical Strike Chance per Level":{affix:'x'},
 	
-	"#% increased Global Critical Strike Multiplier":{affix:'x'},
+	"#% increased Global Critical Strike Multiplier":{affix:'s'},
 	
 	"#% increased Global Defences":{affix:'x'},
 	
@@ -290,7 +290,7 @@
 	
 	"#% increased Light Radius during flask effect":{affix:'x'},
 	
-	"#% increased Lightning Damage":{affix:'x'},
+	"#% increased Lightning Damage":{affix:'s'},
 	
 	"#% increased Lightning Damage per Frenzy Charge":{affix:'x'},
 	
@@ -300,7 +300,7 @@
 	
 	"#% increased Mana Recovery from Flasks":{affix:'x'},
 	
-	"#% increased Mana Regeneration Rate":{affix:'x'},
+	"#% increased Mana Regeneration Rate":{affix:'s'},
 	
 	"#% increased maximum Energy Shield":{affix:'p'},
 	
@@ -340,7 +340,7 @@
 	
 	"#% increased Movement Speed while Shocked":{affix:'x'},
 	
-	"#% increased Physical Damage":{affix:'x'},
+	"#% increased Physical Damage":{affix:'p'},
 	
 	"#% increased Physical Damage taken":{affix:'x'},
 	
@@ -356,7 +356,7 @@
 	
 	"#% increased Projectile Damage per Power Charge":{affix:'x'},
 	
-	"#% increased Projectile Speed":{affix:'x'},
+	"#% increased Projectile Speed":{affix:'s'},
 	
 	"#% increased Projectile Speed per Frenzy Charge":{affix:'x'},
 	
@@ -368,7 +368,7 @@
 	
 	"#% increased Quantity of Items Dropped by Slain Frozen Enemies":{affix:'x'},
 	
-	"#% increased Quantity of Items found":{affix:'x'},
+	"#% increased Quantity of Items found":{affix:'s'},
 	
 	"#% increased Quantity of Items found during flask effect":{affix:'x'},
 	
@@ -488,7 +488,7 @@
 	
 	"#% of Melee Physical Damage taken reflected to Attacker":{affix:'x'},
 	
-	"#% of Physical Attack Damage Leeched as Life":{affix:'x'},
+	"#% of Physical Attack Damage Leeched as Life":{affix:'p'},
 	
 	"#% of Physical Attack Damage Leeched as Life during flask effect":{affix:'x'},
 	
@@ -518,7 +518,7 @@
 	
 	"#% reduced Attack Speed":{affix:'x'},
 	
-	"#% reduced Attribute Requirements":{affix:'x'},
+	"#% reduced Attribute Requirements":{affix:'s'},
 	
 	"#% reduced Cast Speed":{affix:'x'},
 	
@@ -540,7 +540,7 @@
 	
 	"#% reduced Fishing Pool Consumption":{affix:'x'},
 	
-	"#% reduced Flask Charges used":{affix:'x'},
+	"#% reduced Flask Charges used":{affix:'s'},
 	
 	"#% reduced Freeze Duration on You":{affix:'x'},
 	
@@ -550,7 +550,7 @@
 	
 	"#% reduced Global Critical Strike Multiplier":{affix:'x'},
 	
-	"#% reduced Light Radius":{affix:'x'},
+	"#% reduced Light Radius":{affix:'s'},
 	
 	"#% reduced Mana Cost of Skills when on Low Life":{affix:'x'},
 	
@@ -562,7 +562,7 @@
 	
 	"#% reduced maximum Mana":{affix:'x'},
 	
-	"#% reduced Movement Speed":{affix:'x'},
+	"#% reduced Movement Speed":{affix:'p'},
 	
 	"#% reduced Movement Speed when on Low Life":{affix:'x'},
 	
@@ -600,9 +600,9 @@
 	
 	"+# Life gained for each Enemy hit by your Spells":{affix:'x'},
 	
-	"+# Life gained for each Ignited Enemy hit by your Attacks":{affix:'x'},
+	"+# Life gained for each Ignited Enemy hit by your Attacks":{affix:'s'},
 	
-	"+# Life gained on Kill":{affix:'x'},
+	"+# Life gained on Kill":{affix:'s'},
 	
 	"+# Life gained on Kill per Frenzy Charge":{affix:'x'},
 	
@@ -614,7 +614,7 @@
 	
 	"+# Mana gained for each Enemy hit by your Attacks":{affix:'x'},
 	
-	"+# Mana Gained on Kill":{affix:'x'},
+	"+# Mana Gained on Kill":{affix:'s'},
 	
 	"+# Mana gained on Kill per Level":{affix:'x'},
 	
@@ -624,19 +624,19 @@
 	
 	"+# Strength Requirement":{affix:'x'},
 	
-	"+# to Accuracy Rating":{affix:'x'},
+	"+# to Accuracy Rating":{affix:'s'},
 	
-	"+# to all Attributes":{affix:'x'},
+	"+# to all Attributes":{affix:'s'},
 	
 	"+# to Armour":{affix:'p'},
 	
 	"+# to Armour while Frozen":{affix:'x'},
 	
-	"+# to Dexterity":{affix:'x'},
+	"+# to Dexterity":{affix:'s'},
 	
-	"+# to Evasion Rating":{affix:'x'},
+	"+# to Evasion Rating":{affix:'p'},
 	
-	"+# to Intelligence":{affix:'x'},
+	"+# to Intelligence":{affix:'s'},
 	
 	"+# to Level of Active Skill Gems in this item":{affix:'x'},
 	
@@ -644,43 +644,43 @@
 	
 	"+# to Level of Curse Gems in this item":{affix:'x'},
 	
-	"+# to Level of Socketed Aura Gems":{affix:'x'},
+	"+# to Level of Socketed Aura Gems":{affix:'p'},
 	
-	"+# to Level of Socketed Bow Gems":{affix:'x'},
+	"+# to Level of Socketed Bow Gems":{affix:'p'},
 	
-	"+# to Level of Socketed Cold Gems":{affix:'x'},
+	"+# to Level of Socketed Cold Gems":{affix:'p'},
 	
-	"+# to Level of Socketed Curse Gems":{affix:'x'},
+	"+# to Level of Socketed Curse Gems":{affix:'p'},
 	
-	"+# to Level of Socketed Elemental Gems":{affix:'x'},
+	"+# to Level of Socketed Elemental Gems":{affix:'p'},
 	
-	"+# to Level of Socketed Fire Gems":{affix:'x'},
+	"+# to Level of Socketed Fire Gems":{affix:'p'},
 	
-	"+# to Level of Socketed Gems":{affix:'x'},
+	"+# to Level of Socketed Gems":{affix:'p'},
 	
-	"+# to Level of Socketed Lightning Gems":{affix:'x'},
+	"+# to Level of Socketed Lightning Gems":{affix:'p'},
 	
-	"+# to Level of Socketed Melee Gems":{affix:'x'},
+	"+# to Level of Socketed Melee Gems":{affix:'p'},
 	
-	"+# to Level of Socketed Minion Gems":{affix:'x'},
+	"+# to Level of Socketed Minion Gems":{affix:'p'},
 	
-	"+# to Level of Socketed Movement Gems":{affix:'x'},
+	"+# to Level of Socketed Movement Gems":{affix:'p'},
 	
-	"+# to Level of Socketed Spell Gems":{affix:'x'},
+	"+# to Level of Socketed Spell Gems":{affix:'p'},
 	
-	"+# to Level of Socketed Strength Gems":{affix:'x'},
+	"+# to Level of Socketed Strength Gems":{affix:'p'},
 	
-	"+# to Level of Socketed Support Gems":{affix:'x'},
+	"+# to Level of Socketed Support Gems":{affix:'p'},
 	
-	"+# to Level of Socketed Vaal Gems":{affix:'x'},
+	"+# to Level of Socketed Vaal Gems":{affix:'p'},
 	
-	"+# to Level of Support Gems in this item":{affix:'x'},
+	"+# to Level of Support Gems in this item":{affix:'p'},
 	
-	"+# to maximum Energy Shield":{affix:'x'},
+	"+# to maximum Energy Shield":{affix:'p'},
 	
 	"+# to maximum Life":{affix:'p'},
 	
-	"+# to maximum Mana":{affix:'x'},
+	"+# to maximum Mana":{affix:'p'},
 	
 	"+# to maximum number of Skeletons":{affix:'x'},
 	
@@ -714,31 +714,31 @@
 	
 	"+#% Monster Physical Resistance":{affix:'x'},
 	
-	"+#% to all Elemental Resistances":{affix:'x'},
+	"+#% to all Elemental Resistances":{affix:'s'},
 	
 	"+#% to all maximum Elemental Resistances during flask effect":{affix:'x'},
 	
 	"+#% to all maximum Resistances":{affix:'x'},
 	
-	"+#% to Chaos Resistance":{affix:'x'},
+	"+#% to Chaos Resistance":{affix:'s'},
 	
-	"+#% to Cold Resistance":{affix:'x'},
+	"+#% to Cold Resistance":{affix:'s'},
 	
 	"+#% to Cold Resistance when Socketed with a Green Gem":{affix:'x'},
 	
-	"+#% to Fire and Cold Resistances":{affix:'x'},
+	"+#% to Fire and Cold Resistances":{affix:'s'},
 	
-	"+#% to Fire and Lightning Resistances@":{affix:'x'},
+	"+#% to Fire and Lightning Resistances@":{affix:'s'},
 	
-	"+#% to Fire Resistance":{affix:'x'},
+	"+#% to Fire Resistance":{affix:'s'},
 	
 	"+#% to Fire Resistance when Socketed with a Red Gem":{affix:'x'},
 	
-	"+#% to Lightning Resistance":{affix:'x'},
+	"+#% to Lightning Resistance":{affix:'s'},
 	
 	"+#% to Lightning Resistance when Socketed with a Blue Gem":{affix:'x'},
 	
-	"+#% to maximum Block Chance":{affix:'x'},
+	"+#% to maximum Block Chance":{affix:'s'},
 	
 	"+#% to maximum Cold Resistance":{affix:'x'},
 	
@@ -912,25 +912,25 @@
 	
 	"Adds #% Mana Leech to Physical Attack Damage during flask effect":{affix:'x'},
 	
-	"Adds #-# Chaos Damage":{affix:'x'},
+	"Adds #-# Chaos Damage":{affix:'p'},
 	
 	"Adds #-# Chaos Damage in Off Hand":{affix:'x'},
 	
 	"Adds #-# Chaos Damage to Spells":{affix:'x'},
 	
-	"Adds #-# Cold Damage":{affix:'x'},
+	"Adds #-# Cold Damage":{affix:'p'},
 	
 	"Adds #-# Cold Damage in Off Hand":{affix:'x'},
 	
-	"Adds #-# Fire Damage":{affix:'x'},
+	"Adds #-# Fire Damage":{affix:'p'},
 	
 	"Adds #-# Fire Damage against Ignited Enemies":{affix:'x'},
 	
 	"Adds #-# Fire Damage in Main Hand":{affix:'x'},
 	
-	"Adds #-# Lightning Damage":{affix:'x'},
+	"Adds #-# Lightning Damage":{affix:'p'},
 	
-	"Adds #-# Physical Damage":{affix:'x'},
+	"Adds #-# Physical Damage":{affix:'p'},
 	
 	"Adds #-# Physical Damage against Frozen Enemies":{affix:'x'},
 	
