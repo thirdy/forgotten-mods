@@ -1713,7 +1713,7 @@
 	  affix = mod_map[mod];
 	  if(affix) {
 		  affix = affix.affix;
-		  affix = affix == 'x' ? 'tbd' : affix == 'p' ? 'prefix' : 'suffix';
+		  affix = affix == 'x' ? '' : affix == 'p' ? 'prefix' : 'suffix';
 		  $(this).prepend("<i style='color:#FFFFFF'>" + affix + '</i>&nbsp&nbsp');
 	  } else {
 	  	  // new mod? just log it for now, later we might make this an alert, or a user-friendly jquery notification
