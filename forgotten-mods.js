@@ -1725,9 +1725,12 @@
 	  affix = mod_map[mod];
 	  if(affix) {
 		  affix = affix.affix;
-		  affix = affix == 'x' ? '' : affix == 'p' ? '&amp;prefix' : '&#64;suffix';
-		  if 
-		  $(this).prepend("<b style='color:#FFFFFF'>" + affix + '</b>&nbsp&nbsp');
+		  if(affix == 'p') {
+		     $(this).prepend("<b style='color:#4584d3'>" + '[prefix]' + '</b>&nbsp&nbsp');	
+		  }
+		  if(affix == 's') {
+		     $(this).prepend("<b style='color:#b60f2e'>" + '[suffix]' + '</b>&nbsp&nbsp');	
+		  }
 	  } else {
 	  	  // new mod? just log it for now, later we might make this an alert, or a user-friendly jquery notification
 		  console.log(mod);
