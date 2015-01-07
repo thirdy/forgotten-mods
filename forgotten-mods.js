@@ -1698,7 +1698,7 @@
 	  value = $(this).attr('data-value');
 	  
 	  // we skip implicit mod here
-	  if(mod.startsWith('$')) return;
+	  if(mod.lastIndexOf('$', 0) == 0) return;
 	  
 	  // remove the '#' as the first character
 	  // For example, this mod from the search result:
@@ -1706,7 +1706,9 @@
 	  // Here we'll get "#Your Spells have Culling Strike" class="
 	  // We wanna remove the first character there.
 	  // I'm not sure why it has that while the mods listed in the explicit combobox (from the search form) doesn't have one.
-	  if(mod.startsWith('#')) mod = mod.substring(1);
+	  if(mod.lastIndexOf('#', 0) == 0) mod = mod.substring(1);
+	  
+	  //console.log(mod)
 	  
 	  affix = mod_map[mod];
 	  if(affix) {
@@ -1719,4 +1721,4 @@
 	  }
 	});
 	
-})
+})();
