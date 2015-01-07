@@ -6,11 +6,11 @@
 	// List of mods taken from the Serach Form > Explicit Combobox
 	// see https://github.com/thirdy/forgotten-mods/blob/master/mods_lister.js which I used to generate these values.
 	var mod_map = {
-	 "# Life Regenerated per secsond":{affix:'s'},
+	 "# Life Regenerated per second":{affix:'s'},
 
-	"# Mana Regenerated per second":{affix:'x'},
+	"# Mana Regenerated per second":{affix:'s'},
 	
-	"#% additional Block Chance":{affix:'x'},
+	"#% additional Block Chance":{affix:'s'},
 	
 	"#% additional Block Chance while Dual Wielding":{affix:'x'},
 	
@@ -286,7 +286,7 @@
 	
 	"#% increased Life Recovered":{affix:'x'},
 	
-	"#% increased Light Radius":{affix:'x'},
+	"#% increased Light Radius":{affix:'s'},
 	
 	"#% increased Light Radius during flask effect":{affix:'x'},
 	
@@ -326,7 +326,7 @@
 	
 	"#% increased Monster Movement Speed":{affix:'x'},
 	
-	"#% increased Movement Speed":{affix:'x'},
+	"#% increased Movement Speed":{affix:'p'},
 	
 	"#% increased Movement Speed during flask effect":{affix:'x'},
 	
@@ -408,7 +408,7 @@
 	
 	"#% increased Skeleton Duration":{affix:'x'},
 	
-	"#% increased Spell Damage":{affix:'x'},
+	"#% increased Spell Damage":{affix:'s'},
 	
 	"#% increased Spell Damage per 5% Block Chance":{affix:'x'},
 	
