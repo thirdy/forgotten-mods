@@ -1688,7 +1688,17 @@
 	
 	"Zombies deal #% increased Physical Damage":{affix:'x'}
 	};
+	
+	// Utility functions
+	function endsWith(str, suffix) {
+             return str.indexOf(suffix, str.length - suffix.length) !== -1;
+        }
+        
+        function startWith(str, prefix) {
+             return str.lastIndexOf(prefix, 0) == 0;
+        }
 
+	// Main code
 	explicit_mods = $('.mods').not('.withline').children(); 
 	explicit_mods = $(explicit_mods).not('.pseudo');
 
@@ -1708,13 +1718,15 @@
 	  // I'm not sure why it has that while the mods listed in the explicit combobox (from the search form) doesn't have one.
 	  if(mod.lastIndexOf('#', 0) == 0) mod = mod.substring(1);
 	  
-	  //console.log(mod)
+	  // remove the '@' as the last character
+	  // this character is use to denote if the mod is a master-crafted mod
+	  if(endsWith(mod, '@')) mod = mod.substring(0, mod.length - 1);
 	  
 	  affix = mod_map[mod];
 	  if(affix) {
 		  affix = affix.affix;
-		  affix = affix == 'x' ? '' : affix == 'p' ? 'prefix' : 'suffix';
-		  $(this).prepend("<i style='color:#FFFFFF'>" + affix + '</i>&nbsp&nbsp');
+		  affix = affix == 'x' ? '' : affix == 'p' ? '[prefix]' : '[suffix]';
+		  $(this).prepend("<b style='color:#FFFFFF'>" + affix + '</b>&nbsp&nbsp');
 	  } else {
 	  	  // new mod? just log it for now, later we might make this an alert, or a user-friendly jquery notification
 		  console.log(mod);
