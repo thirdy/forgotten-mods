@@ -1,130 +1,134 @@
-// Path of Exile Forgotten Mods - A simple bookmarklet that will augment poe.trade with more info.
-	// Check out the forum thread - http://www.pathofexile.com/forum/edit-thread/1164052
-	// PM me in game: ManicCompression
-
-	// List of mods taken from the Serach Form > Explicit Combobox
-	// see https://github.com/thirdy/forgotten-mods/blob/master/mods_lister.js which I used to generate these values.
-	// Data used: http://pathofexile.gamepedia.com/Item_Affix
-	
-	var mod_map = {
-
+var mod_map = {
+/* Mods are sorted in the same order as the mods compendium */
 /* PREFIXES */
-"#% increased Armour":{affix:'p', appearsOn:[helmets, gloves, boots, body_armours, amulets]},
-"#% increased Armour and Energy Shield":{affix:'p'},
-"#% increased Armour and Evasion":{affix:'p'},
-"#% increased Armour, Evasion and Energy Shield":{affix:'p'},
+"Adds #-# Cold Damage":{affix:'Base Min Added Cold Dmg / Base Max Added Cold Dmg', affix2:'Local Min Added Cold Dmg / Local Max Added Cold Dmg'},
+"Adds #-# Fire Damage":{affix:'Base Min Added Fire Dmg / Base Max Added Fire Dmg', affix2:'Local Min Added Fire Dmg / Local Max Added Fire Dmg'},
+"Adds #-# Lightning Damage":{affix:'Base Min Added Lightning Dmg / Base Max Added Lightning Dmg',affix2:'Local Min Added Lightning Dmg / Local Max Added Lightning Dmg'},
+"Adds #-# Physical Damage":{affix:'Base Min Added Physical Dmg / Base Max Added Physical Dmg'},
+"Reflects # Physical Damage to Melee Attackers":{affix:'Physical Dmg To Return To Melee Attacker'}
+"#% increased Physical Damage":{affix:'Local Physical Dmg +%'},
+/* for hybrid phys/accuracy -- 'Local Physical Dmg +% / Local Accuracy Rating' */
+
+/**/
+
+/*This mod is for amulets, for STR based (Helmets	Gloves	Boots	Chests	Shields)
+*/
+"#% increased Armour":{affix:'Local Armor +%', affix2:'Armor Rating +%'},
+
+"+# to Armour":{affix:'Armor Rating', affix2:'Local Armor Rating'},
+
+/*for hybrid with stun 'Local Armor +% / Base Stun Recovery +%'*/
+
+"+# to maximum Energy Shield":{affix:'Base Max Energy Shield', affix2:'Local Energy Shield'},
+"#% increased maximum Energy Shield":{affix:'Max Energy Shield +%', affix2:'Local Energy Shield +%'},
+
+/*hybrid Local Energy Shield +% / Base Stun Recovery +%
+Local Armour And Evasion +% / Base Stun Recovery +%
+Local Evasion And Energy Shield +% / Base Stun Recovery +%
+*/
 
 
-"#% increased Elemental Damage with Weapons":{affix:'p'},
-"#% increased Evasion Rating":{affix:'p'},
+"+# to maximum Life":{affix:'Base Max Life'},
+"+# to maximum Mana":{affix:'Base Max Mana'},
+"#% of Physical Attack Damage Leeched as Life":{affix:'Life Leech From Physical Dmg %'},
+"#% of Physical Attack Damage Leeched as Mana":{affix:'Mana Leech From Physical Dmg %'},
+"#% increased Spell Damage":{affix:'Spell Dmg +%'},
 
-"#% increased Flask Life Recovery rate":{affix:'p'},
-"#% increased Flask Mana Recovery rate":{affix:'p'},
+/*hybrid Spell Dmg +% / Base Max Mana*/
 
-"#% increased maximum Energy Shield":{affix:'p'},
-"#% increased Movement Speed":{affix:'p'},
-"#% increased Physical Damage":{affix:'p'},
-"#% increased Projectile Speed":{affix:'s'},
+"#% increased Elemental Damage with Weapons":{affix:'Weapon Elemental Dmg +%'},
 
-"#% of Physical Attack Damage Leeched as Life":{affix:'p'},
+"#% increased Armour and Energy Shield":{affix:null},
+"#% increased Armour and Evasion":{affix:null},
+"#% increased Armour, Evasion and Energy Shield":{affix:null},
 
-"#% reduced Movement Speed":{affix:'p'},
-"+# Life gained for each Ignited Enemy hit by your Attacks":{affix:'s'},
+"#% increased Evasion Rating":{affix:null},
+"#% increased Flask Life Recovery rate":{affix:null},
+"#% increased Flask Mana Recovery rate":{affix:null},
 
-"+# to Armour":{affix:'p'},
-"+# to Dexterity":{affix:'s'},
-"+# to Evasion Rating":{affix:'p'},
+"#% increased Movement Speed":{affix:null},
 
-"+# to Level of Socketed Aura Gems":{affix:'p'},
-"+# to Level of Socketed Bow Gems":{affix:'p'},
-"+# to Level of Socketed Cold Gems":{affix:'p'},
-"+# to Level of Socketed Curse Gems":{affix:'p'},
-"+# to Level of Socketed Elemental Gems":{affix:'p'},
-"+# to Level of Socketed Fire Gems":{affix:'p'},
-"+# to Level of Socketed Gems":{affix:'p'},
-"+# to Level of Socketed Lightning Gems":{affix:'p'},
-"+# to Level of Socketed Melee Gems":{affix:'p'},
-"+# to Level of Socketed Minion Gems":{affix:'p'},
-"+# to Level of Socketed Movement Gems":{affix:'p'},
-"+# to Level of Socketed Spell Gems":{affix:'p'},
-"+# to Level of Socketed Strength Gems":{affix:'p'},
-"+# to Level of Socketed Support Gems":{affix:'p'},
-"+# to Level of Socketed Vaal Gems":{affix:'p'},
-"+# to Level of Support Gems in this item":{affix:'p'},
-"+# to maximum Energy Shield":{affix:'p'},
-"+# to maximum Life":{affix:'p'},
-"+# to maximum Mana":{affix:'p'},
-"Adds #-# Chaos Damage":{affix:'p'},
-"Adds #-# Cold Damage":{affix:'p'},
-"Adds #-# Fire Damage":{affix:'p'},
-"Adds #-# Lightning Damage":{affix:'p'},
-"Adds #-# Physical Damage":{affix:'p'},
-"Reflects # Physical Damage to Melee Attackers":{affix:'p'}
+
+"#% reduced Movement Speed":{affix:null},
+
+"+# to Evasion Rating":{affix:null},
+"+# to Level of Socketed Aura Gems":{affix:null},
+"+# to Level of Socketed Bow Gems":{affix:null},
+"+# to Level of Socketed Cold Gems":{affix:null},
+"+# to Level of Socketed Curse Gems":{affix:null},
+"+# to Level of Socketed Elemental Gems":{affix:null},
+"+# to Level of Socketed Fire Gems":{affix:null},
+"+# to Level of Socketed Gems":{affix:null},
+"+# to Level of Socketed Lightning Gems":{affix:null},
+"+# to Level of Socketed Melee Gems":{affix:null},
+"+# to Level of Socketed Minion Gems":{affix:null},
+"+# to Level of Socketed Movement Gems":{affix:null},
+"+# to Level of Socketed Spell Gems":{affix:null},
+"+# to Level of Socketed Strength Gems":{affix:null},
+"+# to Level of Socketed Support Gems":{affix:null},
+"+# to Level of Socketed Vaal Gems":{affix:null},
+"+# to Level of Support Gems in this item":{affix:null},
+
+"Adds #-# Chaos Damage":{affix:null},
+
+
 
 /* SUFFIXES */
-"+# to Intelligence":{affix:'s'},
-"+# Life gained on Kill":{affix:'s'},
-"+# Mana Gained on Kill":{affix:'s'},
-"+# to Accuracy Rating":{affix:'s'},
-"+# to all Attributes":{affix:'s'},
-"#% reduced Attribute Requirements":{affix:'s'},
-"#% reduced Enemy Stun Threshold":{affix:'s'},
-"#% reduced Flask Charges used":{affix:'s'},
-"#% reduced Light Radius":{affix:'s'},
-"#% increased Quantity of Items found":{affix:'s'},
-"#% increased Spell Damage":{affix:'s'},
-"#% increased Stun Duration on enemies":{affix:'s'},
-"#% increased Stun Duration on Enemies":{affix:'s'},
-"#% increased Stun Recovery":{affix:'s'},
-"#% increased Global Critical Strike Chance":{affix:'s'},
-"#% increased Global Critical Strike Multiplier":{affix:'s'},
+"#% increased Projectile Speed":{affix:'Projectile speed +%'},
+"+# to Accuracy Rating":{affix:'Accuracy Rating', affix2:'Local Accuracy Rating'},
+/*hybrid Light Radius / +Accuracy Rating*/
+"#% increased Attack Speed":{affix:'Attack Speed +%', affix2:'Local Attack Speed +%'},
+"+# to all Attributes":{affix:'Additional All Attributes'},
+
+"+# to Dexterity":{affix:'Additional Dexterity'},
+"+# to Intelligence":{affix:'Additional Intelligence'},
+"+# to Strength":{affix:'Additional Strength'},
+"#% increased Cast Speed":{affix:'Base Cast Speed +%'},
+"#% increased Global Critical Strike Multiplier":{affix:'Base Critical Strike Multiplier +%', affix2:'Weapon-only Critical Strike Multiplier +%'},
+
+"#% increased Global Critical Strike Chance":{affix:'Critical Strike Chance +%'},
+"#% increased Critical Strike Chance":{affix:'Local Critical Strike Chance +%'},
+"#% increased Critical Strike Chance for Spells":{affix:'Spell Critical Strike Chance +%'},
+"#% increased Cold Damage":{affix:'Cold Dmg +%'},
+
+"#% increased Fire Damage":{affix:'Fire Dmg +%'},
+"#% increased Lightning Damage":{affix:'Lightning Dmg +%'},
+/*
+*/
+
+"#% increased Flask Charges gained":{affix:'Charges Gained +%'},
+"#% increased Flask effect duration":{affix:'Flask Duration +%'},
+
+"#% increased Quantity of Items found":{affix:'Base Item Found Quantity +%'},
+
+"+# Life gained for each Ignited Enemy hit by your Attacks":{affix:'Life Gain Per Target'},
+
+
+"+# Life gained on Kill":{affix:'Life Gained On Enemy Death'},
+
+"# Life Regenerated per second":{affix:'Base Life Regeneration Rate Per Second'},
+"# Mana Regenerated per second":{affix:'Mana Regeneration Rate +%'},
+
+"+# Mana Gained on Kill":{affix:'Mana Gained On Enemy Death'},
+
+
+"+#% to Chaos Resistance":{affix:'Base Chaos Dmg Resistance %'},
+"+#% to Cold Resistance":{affix:'Base Cold Dmg Resistance %'},
+"+#% to Fire Resistance":{affix:'Base Fire Dmg Resistance %'},
+"+#% to Lightning Resistance":{affix:'Base Lightning Dmg Resistance %'},
+"+#% to all Elemental Resistances":{affix:'Base Resist All Elements %'},
+
+
+"#% reduced Attribute Requirements":{affix:'Local Attribute Requirements -%'},
+/*"+#% to maximum Block Chance":{affix:'Local Additional Block Chance %'},*/
+"#% additional Block Chance":{affix:'Local Additional Block Chance %'},
+"#% increased Stun Duration on Enemies":{affix:'Base Stun Duration +%'},
+"#% reduced Enemy Stun Threshold":{affix:'Base Stun Threshold Reduction +%'}
+
+/* TODO "#% reduced Flask Charges used":{affix:'s'},
 "#% increased Light Radius":{affix:'s'},
-"#% increased Lightning Damage":{affix:'s'},
-"#% increased Mana Regeneration Rate":{affix:'s'},
-"#% increased Fire Damage":{affix:'s'},
-"#% increased Flask Charges gained":{affix:'s'},
-"#% increased Flask effect duration":{affix:'s'},
-"#% increased Critical Strike Chance for Spells":{affix:'s'},
-"#% increased Attack Speed":{affix:'s'},
-"#% increased Cast Speed":{affix:'s'},
-"#% increased Cold Damage":{affix:'s'},
-"# Life Regenerated per second":{affix:'s'},
-"# Mana Regenerated per second":{affix:'s'},
-"#% additional Block Chance":{affix:'s'},
-"+# to Strength":{affix:'s'},
-"+#% Monster Cold Resistance":{affix:'s'},
-"+#% Monster Fire Resistance":{affix:'s'},
-"+#% Monster Lightning Resistance":{affix:'s'},
-"+#% to all Elemental Resistances":{affix:'s'},
-"+#% to Chaos Resistance":{affix:'s'},
-"+#% to Cold Resistance":{affix:'s'},
-"+#% to Fire and Cold Resistances":{affix:'s'},
-"+#% to Fire and Lightning Resistances@":{affix:'s'},
-"+#% to Fire Resistance":{affix:'s'},
-"+#% to Lightning Resistance":{affix:'s'},
-"+#% to maximum Block Chance":{affix:'s'},
+"#% reduced Light Radius":{affix:'s'},
+"#% increased Stun Recovery":{affix:'s'},
+*/
+
 	};
-
-/* Categories below are based from http://pathofexile.gamepedia.com/Item_Affix */
-var ItemCategoryEnum = {
-  all: "mod can appear on any item",
-  helmets: "helmets",
-  gloves: "gloves",
-  body_armours: "body armours",
-  amulets: "amulets",
-  rings: "rings",
-  belts: "belts",
-  weapon: "weapon of all types",
-  two_handed_weapons: "two handed weapons",
-  melee_weapons:"melee weapons",
-  bows: "bows",
-  boots: "boots",
-  one_hand_magic_weapon:"one handed magical weapons sceptres, wands, and daggers",
-  staff: "staves",
-  shields: "shields",
-  spirit_shields: "spirit shields",
-  quivers: "quivers",
-  flasks: "flasks"
-};
-
-
