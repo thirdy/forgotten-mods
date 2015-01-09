@@ -93,7 +93,8 @@ function translatePoeModsToXyzMod(poemods_mod) {
                 */
                 "#% increased Armour":{affix:'Local Armor +%', affix2:'Armor Rating +%'},
                 "+# to Armour":{affix:'Armor Rating', affix2:'Local Armor Rating'},
-                "+# to Evasion Rating":{affix:'Local Evasion Rating +%'},
+                "+# to Evasion Rating":{affix:'Local Evasion Rating'},
+                "#% increased Evasion Rating":{affix:'Local Evasion Rating +%'},
 
                 /*for hybrid with stun 'Local Armor +% / Base Stun Recovery +%'*/
 
@@ -126,11 +127,11 @@ function translatePoeModsToXyzMod(poemods_mod) {
                 "#% increased Armour and Evasion":{affix:null},
                 "#% increased Armour, Evasion and Energy Shield":{affix:null},
 
-                "#% increased Evasion Rating":{affix:null},
+                
                 "#% increased Flask Life Recovery rate":{affix:null},
                 "#% increased Flask Mana Recovery rate":{affix:null},
 
-                "#% increased Movement Speed":{affix:null},
+                "#% increased Movement Speed":{affix:'Base Movement Velocity +%'},
 
 
                 "#% reduced Movement Speed":{affix:null},
