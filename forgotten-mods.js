@@ -4537,11 +4537,6 @@
   
   
 
-    //$.getScript(mod_data_url, function() {
-
-        //console.log("Script 'forgotten-mods-mod-data.js' sucessfully loaded. Url used is " + mod_data_url);
-
-        //var mods_data = mod_map;
 
         /* Main code */
         /*
@@ -4680,9 +4675,19 @@
           
           var min_val = null;
           var max_val = null;
-          if(/\d+\sto\s\d+/.test(tier_value_raw)) {
+          
+          /* http://stackoverflow.com/questions/447250/matching-exact-string-with-javascript */
+          
+          /* Range values like 30 to 39 */
+          if(/^\d+\sto\s\d+$/.test(tier_value_raw)) {
             min_val = /(\d+)\sto\s\d+/.exec(tier_value_raw)[1];
             max_val = /\d+\sto\s(\d+)/.exec(tier_value_raw)[1];
+          }
+          
+          /* Single values like 30 for movement speed on boots */
+          if(/^\d+$/.test(tier_value_raw)) {
+            min_val = tier_value_raw;
+            max_val = tier_value_raw;
           }
           
           if(min_val != null && max_val != null
