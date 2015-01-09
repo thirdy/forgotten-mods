@@ -136,22 +136,22 @@ function translatePoeModsToXyzMod(poemods_mod) {
 
                 "#% reduced Movement Speed":{affix:null},
 
-                
-                "+# to Level of Socketed Aura Gems":{affix:null},
+          
+                "+# to Level of Socketed Minion Gems":{affix:'Local Socketed Minion Gem Level +'},
                 "+# to Level of Socketed Bow Gems":{affix:'Local Socketed Bow Gem Level +'},
-                "+# to Level of Socketed Cold Gems":{affix:null},
-                "+# to Level of Socketed Curse Gems":{affix:null},
-                "+# to Level of Socketed Elemental Gems":{affix:null},
-                "+# to Level of Socketed Fire Gems":{affix:null},
                 "+# to Level of Socketed Gems":{affix:'Local Socketed Gem Level +'},
-                "+# to Level of Socketed Lightning Gems":{affix:null},
+          
+                "+# to Level of Socketed Cold Gems":{affix:'Local Socketed Cold Gem Level +'},
+                "+# to Level of Socketed Fire Gems":{affix:'Local Socketed Fire Gem Level +'},
+                "+# to Level of Socketed Lightning Gems":{affix:'Local Socketed Lightning Gem Level +'},
+          
+                 /* melee gems is not yet in poemods.com */
                 "+# to Level of Socketed Melee Gems":{affix:null},
-                "+# to Level of Socketed Minion Gems":{affix:null},
-                "+# to Level of Socketed Movement Gems":{affix:null},
+                
                 "+# to Level of Socketed Spell Gems":{affix:null},
                 "+# to Level of Socketed Strength Gems":{affix:null},
                 "+# to Level of Socketed Support Gems":{affix:null},
-                "+# to Level of Socketed Vaal Gems":{affix:null},
+                
                 "+# to Level of Support Gems in this item":{affix:null},
 
                 "Adds #-# Chaos Damage":{affix:null},
