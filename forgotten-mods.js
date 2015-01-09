@@ -4620,14 +4620,15 @@
               // #% increased Flask Life recovery rate
               // so we'll go case-insensitive
                */
-              getAffix(type, mod, lvl_req, str_req != null, dex_req != null, int_req != null, function(affix){
+              getAffix(type, mod, lvl_req, str_req != null, dex_req != null, int_req != null, value, function(affix, tier){
                 log('affixed resolved to: ' + affix);
                 if (affix != null) {
+                    var tier_str = tier != -1 ? '[T' + tier + ']' : '';
                     if (affix == 'p') {
-                      $(mod_element).prepend("<b style='color:#4584d3'>" + '[prefix]' + '</b>&nbsp&nbsp');
+                      $(mod_element).prepend("<b style='color:#4584d3'>" + tier_str + '[prefix]' + '</b>&nbsp&nbsp');
                     }
                     if (affix == 's') {
-                      $(mod_element).prepend("<b style='color:#b60f2e'>" + '[suffix]' + '</b>&nbsp&nbsp');
+                      $(mod_element).prepend("<b style='color:#b60f2e'>" + tier_str + '[suffix]' + '</b>&nbsp&nbsp');
                     }
                 }
               });
@@ -4640,7 +4641,7 @@
 
     //});
   
-    function getAffix(type, mod, lvl_req, is_str_req, is_dex_req, is_int_req, affix_callback) {
+    function getAffix(type, mod, lvl_req, is_str_req, is_dex_req, is_int_req, value, affix_callback) {
       
       var param_mod;
 		
@@ -4664,10 +4665,31 @@
      // log(param_mod);
      // log(param_type);
       
-      var result = '?';
+      var affix_result = '?';
+      var tier_result = -1;
+      
       var mod_data = mods_data[type.toLowerCase()][mod];
-      if(mod_data != null) result = mod_data.affix;
-      affix_callback(result);
+      
+      if(mod_data != null) {
+        
+        affix_result = mod_data.affix;
+        for(i = 0; i < mod_data.tiers.length; i++) {
+          var tier_value_raw = mod_data.tiers[i].tier_value
+          var min_val = null;
+          var max_val = null;
+          if(/\d+\sto\s\d+/.test(tier_value_raw)) {
+            min_val = /(\d+)\sto\s\d+/.exec(tier_value_raw)[1];
+            max_val = /\d+\sto\s(\d+)/.exec(tier_value_raw)[1];
+          }
+          
+          if(min_val != null && max_val != null
+              && min_val <= value && max_val >= value) {
+            tier_result = mod_data.tiers[i].tier;
+          }
+        }
+      }
+      
+      affix_callback(affix_result, tier_result);
 
       
        // prop = (prop + "").toLowerCase();
