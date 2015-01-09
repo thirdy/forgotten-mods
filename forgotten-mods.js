@@ -4611,7 +4611,7 @@
                */
               if (endsWith(mod, '@')) mod = mod.substring(0, mod.length - 1);
             
-              log(mod);
+              log(mod + " with value: " + value);
             
               var mod_element = this;
 
@@ -4642,6 +4642,8 @@
     //});
   
     function getAffix(type, mod, lvl_req, is_str_req, is_dex_req, is_int_req, value, affix_callback) {
+      
+      value = Math.floor( value ); /* The tier determination code doesn't work well with floats */
       
       var param_mod;
 		
@@ -4675,6 +4677,7 @@
         affix_result = mod_data.affix;
         for(i = 0; i < mod_data.tiers.length; i++) {
           var tier_value_raw = mod_data.tiers[i].tier_value
+          
           var min_val = null;
           var max_val = null;
           if(/\d+\sto\s\d+/.test(tier_value_raw)) {
@@ -4686,6 +4689,11 @@
               && min_val <= value && max_val >= value) {
             tier_result = mod_data.tiers[i].tier;
           }
+          
+          log(tier_value_raw + "  --->   min: " + min_val + " max: " + max_val + ". Tier resolved to: " + tier_result);
+          
+          if(tier_result != -1)
+            break;
         }
       }
       
