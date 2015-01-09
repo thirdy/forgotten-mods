@@ -3056,9 +3056,19 @@
       
       var param_mod;
 		
+      /*
+       Test Data:
+       Gloves: http://poe.trade/search/ruziosahuomoko
+       
+      
+      */
+      
+      if(type == 'Helmets') type = 'Helmet'; /* poemods uses Helmet while poe.trade uses Helmets */
+      
     
      // log(param_mod);
      // log(param_type);
+      
       var result = '?';
       var mod_data = mods_data[type.toLowerCase()][mod];
       if(mod_data != null) result = mod_data.affix;
