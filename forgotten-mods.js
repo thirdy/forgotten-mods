@@ -1,8 +1,7 @@
-// Path of Exile Forgotten Mods 0.6 - A simple bookmarklet that will augment poe.trade with more info.
+// Path of Exile Forgotten Mods 0.5 - A simple bookmarklet that will augment poe.trade with more info.
 // Check out the forum thread - http://www.pathofexile.com/forum/edit-thread/1164052
 // PM me in game: ManicCompression
 // Code prettyfied by http://jsbeautifier.org/
-// Project is open source, see https://github.com/thirdy/forgotten-mods for license
 (function() {
 
     // The mods data is located in another js file, we import it first.
@@ -7473,11 +7472,11 @@
                     var tier_str = tier != -1 ? '[T' + tier + ']' : '';
                     if (affix == 'p') {
                       $(mod_element).prepend("<b style='color:#4584d3'>" + "<span style='display: none;'>[" + magic_name + "]</span>" + tier_str + '[prefix]' + '</b>&nbsp&nbsp');
-                      bindMouseEnterAndLeaveEvent(mod_element);
+                       if(magic_name != null) bindMouseEnterAndLeaveEvent(mod_element);
                     }
                     if (affix == 's') {
                       $(mod_element).prepend("<b style='color:#b60f2e'>" + "<span style='display: none;'>[" + magic_name + "]</span>" + tier_str + '[suffix]' + '</b>&nbsp&nbsp');
-                      bindMouseEnterAndLeaveEvent(mod_element);
+                      if(magic_name != null) bindMouseEnterAndLeaveEvent(mod_element);
                     }
                 }
               });
