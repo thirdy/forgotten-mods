@@ -85,7 +85,7 @@ eval("var mod_map = {" + data_raw + "}");
 for (final_mod_map_key in mod_map) break;
 var final_mod_map = mod_map[final_mod_map_key];
 
-log("'" + final_mod_map_key + "':{");
+log(final_mod_map_key + ":{");
 
 for (mod_key in final_mod_map) {
   
