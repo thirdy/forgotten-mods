@@ -5,6 +5,12 @@
 var data_raw = "";
 
 var type = $('div#show-query span').text();
+
+if(type == '1h Swords & Axes') type = "onehandswordaxe";
+if(type == '2h Swords & Axes') type = "twohandswordaxe";
+if(type == '1h Mace') type = "onehandmace";
+if(type == '2h Mace') type = "twohandmace";
+
 writeToDataRaw(type + ":{");
 
 var affix = null;
@@ -75,10 +81,11 @@ writeToDataRaw("}");
 eval("var mod_map = {" + data_raw + "}");
 
 /* re-roll the tier value and we wanna print it in a compact format */
+
 for (final_mod_map_key in mod_map) break;
 var final_mod_map = mod_map[final_mod_map_key];
 
-log(final_mod_map_key + ":{");
+log("'" + final_mod_map_key + "':{");
 
 for (mod_key in final_mod_map) {
   
