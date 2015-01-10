@@ -1,5 +1,11 @@
+/* The weapon page is dodgy, so the code here is too, a lot workarounds
+   http://poemods.com/index.php?item_type=dagger
+*/
+
+var data_raw = "";
+
 var type = $('div#show-query span').text();
-log(type + ":{");
+writeToDataRaw(type + ":{");
 
 var affix = null;
 var affix_compact = null;
@@ -8,59 +14,92 @@ var mod = null;
 var tierCtr = 0;
 var totalTier = -1;
 
+
+
 $('div#mod-results tr').each(function(){
   
   var trClass = $(this).attr('class'); 
   
-  if(trClass == 'normal'){
+  if(trClass == 'normal' || $(this).text().trim() == 'Suffix'){
     
     if(affix != null) {
-        log(']},'); /* closing for tier */
+        writeToDataRaw(']},'); /* closing for tier */
     }
     
-    affix = $(this).text();
-  }
-  
-  if(trClass == 'accordion'){
+    affix = $(this).text().trim();
+    mod = null;
+    tierCtr = 0;
+  } else if(trClass == 'accordion'){
     
     if(mod != null) {
-       log("]},");
+       writeToDataRaw("]},");
        tierCtr = 0;
     }
+   
+    mod = $(this).find('td:first-child').text().trim();
     
-    mod = $(this).find('td:first-child').text();
     affix_compact = affix == 'Prefix' ? 'p' : 's';
+    var xyz_mod = translatePoeModsToXyzMod(mod);
     
-    log('"' + translatePoeModsToXyzMod(mod) + '":{poemods:"' + mod
+    writeToDataRaw('"' + xyz_mod + '":{poemods:"' + mod
         + '", subtype:null, affix:"' + affix_compact + '", tiers:[');
     
-  }
-  
-  if(trClass == 'inner-row'){
+  } else if(trClass == 'inner-row'){
+            if($(this).text().trim() == "") return; /* There are cases where we have an empty TR, see http://poemods.com/index.php?item_type=dagger */
+            
             var ilvl = $(this).find('b:first-child').text().replace('iLvl: ', '').trim();
         
             // http://stackoverflow.com/questions/3442394/jquery-using-text-to-retrieve-only-text-not-nested-in-child-tags
-            var tier_value = $(this)
+            var tier_value = $(this).find('td:first-child')
             .clone()    //clone the element
             .children() //select all the children
             .remove()   //remove all the children
             .end()  //again go back to selected element
             .text();
-            tier_value = tier_value.replace(')','').replace('(','').replace('-','').trim();
-
+            
+            tier_value = tier_value.replace(')','').replace('(','').replace('-','').replace(':','').trim();
+            
             affix_magic_name = $(this).find('b:nth-child(2)').text().replace(')','').replace('(','').trim();
 
-            log("{tier:" + Math.abs(totalTier - tierCtr) + ", ilvl:" + ilvl + ', tier_value:"' + tier_value + '", affix_magic_name:"' + affix_magic_name + '"},');
+            writeToDataRaw("{tier:" + Math.abs(totalTier - tierCtr) + ", ilvl:" + ilvl + ', tier_value:"' + tier_value + '", affix_magic_name:"' + affix_magic_name + '"},');
             tierCtr++;    
 
   }
   
 });
 
-log(']},'); /* closing for last tier */
-log("}");
+writeToDataRaw(']},'); /* closing for last tier */
+writeToDataRaw("}");
 
-function log(str) {console.log(str);}
+eval("var mod_map = {" + data_raw + "}");
+
+/* re-roll the tier value*/
+for (final_mod_map_key in mod_map) break;
+var final_mod_map = mod_map[final_mod_map_key];
+
+for (mod_key in final_mod_map) {
+  var tier_array = final_mod_map[mod_key].tiers;
+  for(i = 0; i < tier_array.length; i++) {
+    tier_array[i].tier = tier_array.length - i;
+  }
+}
+
+
+/* print final */
+log(final_mod_map_key + ":" + final_mod_map.toSource());
+
+
+//log(mod_map.toSource());
+//log(data_raw);
+
+function writeToDataRaw(str) {
+  data_raw += str;
+}
+
+function log(str) {
+  console.log(str);
+  data_raw += str;
+}
 
 function directText(node) {
  $(node)
@@ -71,7 +110,7 @@ function directText(node) {
     .text();
 }
 
-function translatePoeModsToXyzMod(poemods_mod) {
+function translatePoeModsToXyzMod(param_mod) {
 
         var mod_map = {
                 /* Mods are sorted in the same order as the mods compendium */
@@ -79,7 +118,7 @@ function translatePoeModsToXyzMod(poemods_mod) {
                 "Adds #-# Cold Damage":{affix:'Base Min Added Cold Dmg / Base Max Added Cold Dmg', affix2:'Local Min Added Cold Dmg / Local Max Added Cold Dmg'},
                 "Adds #-# Fire Damage":{affix:'Base Min Added Fire Dmg / Base Max Added Fire Dmg', affix2:'Local Min Added Fire Dmg / Local Max Added Fire Dmg'},
                 "Adds #-# Lightning Damage":{affix:'Base Min Added Lightning Dmg / Base Max Added Lightning Dmg',affix2:'Local Min Added Lightning Dmg / Local Max Added Lightning Dmg'},
-                "Adds #-# Physical Damage":{affix:'Base Min Added Physical Dmg / Base Max Added Physical Dmg'},
+                "Adds #-# Physical Damage":{affix:'Base Min Added Physical Dmg / Base Max Added Physical Dmg', affix2:'Local Min Added Physical Dmg / Local Max Added Physical Dmg'},
                 "Reflects # Physical Damage to Melee Attackers":{affix:'Physical Dmg To Return To Melee Attacker'},
                 "#% increased Physical Damage":{affix:'Local Physical Dmg +%'},
                 /* for hybrid phys/accuracy -- 'Local Physical Dmg +% / Local Accuracy Rating' */
@@ -142,8 +181,8 @@ function translatePoeModsToXyzMod(poemods_mod) {
                 "+# to Level of Socketed Fire Gems":{affix:'Local Socketed Fire Gem Level +'},
                 "+# to Level of Socketed Lightning Gems":{affix:'Local Socketed Lightning Gem Level +'},
           
-                 /* melee gems is not yet in poemods.com */
-                "+# to Level of Socketed Melee Gems":{affix:null},
+                 /* melee gems is not yet in poemods.com for shields */
+                "+# to Level of Socketed Melee Gems":{affix:'Local Socketed Melee Gem Level +'},
                 
                 "+# to Level of Socketed Spell Gems":{affix:null},
                 "+# to Level of Socketed Strength Gems":{affix:null},
@@ -217,13 +256,13 @@ function translatePoeModsToXyzMod(poemods_mod) {
                 
         }
         
-        for (mod in mod_map){
+        for (key in mod_map){
           
-           xyz_mod = mod_map[mod];
-           if(xyz_mod.affix != null && xyz_mod.affix == poemods_mod)
-             return mod;
-           else if(xyz_mod.affix2 != null && xyz_mod.affix2 == poemods_mod)
-             return mod;
+           xyz_mod = mod_map[key];
+           if(xyz_mod.affix != null && xyz_mod.affix == param_mod)
+             return key;
+           else if(xyz_mod.affix2 != null && xyz_mod.affix2 == param_mod)
+             return key;
            
         
         }
