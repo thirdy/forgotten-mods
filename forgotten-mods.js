@@ -7466,15 +7466,17 @@
               // #% increased Flask Life recovery rate
               // so we'll go case-insensitive
                */
-              getAffix(type, mod, lvl_req, str_req != null, dex_req != null, int_req != null, value, function(affix, tier){
+              getAffix(type, mod, lvl_req, str_req != null, dex_req != null, int_req != null, value, function(affix, tier, magic_name){
                 log('affix resolved to: ' + affix);
                 if (affix != null) {
                     var tier_str = tier != -1 ? '[T' + tier + ']' : '';
                     if (affix == 'p') {
-                      $(mod_element).prepend("<b style='color:#4584d3'>" + tier_str + '[prefix]' + '</b>&nbsp&nbsp');
+                      $(mod_element).prepend("<b style='color:#4584d3'>" + "<span style='display: none;'>[" + magic_name + "]</span>" + tier_str + '[prefix]' + '</b>&nbsp&nbsp');
+                      bindMouseEnterAndLeaveEvent(mod_element);
                     }
                     if (affix == 's') {
-                      $(mod_element).prepend("<b style='color:#b60f2e'>" + tier_str + '[suffix]' + '</b>&nbsp&nbsp');
+                      $(mod_element).prepend("<b style='color:#b60f2e'>" + "<span style='display: none;'>[" + magic_name + "]</span>" + tier_str + '[suffix]' + '</b>&nbsp&nbsp');
+                      bindMouseEnterAndLeaveEvent(mod_element);
                     }
                 }
               });
@@ -7484,8 +7486,16 @@
 
             
         });
-
-    //});
+    
+    function bindMouseEnterAndLeaveEvent(mod_elem) {
+          $(mod_elem)
+            .mouseenter(function() {
+              $( this ).find( "span" ).toggle();
+            })
+            .mouseleave(function() {
+              $( this ).find( "span" ).toggle();
+          });
+    }
   
     function getAffix(type, mod, lvl_req, is_str_req, is_dex_req, is_int_req, value, affix_callback) {
       
@@ -7540,6 +7550,7 @@
       
       var affix_result = '?';
       var tier_result = -1;
+      var affix_magic_name = null;
       
       var mod_data = mods_data[type.toLowerCase()];
       if(mod_data == null) return;
@@ -7576,7 +7587,6 @@
           var min_high_val = 0;
           var max_low_val  = 0;
           var max_high_val = 0;
-          
           
           /* Double range values, mostly for flat damage mods, e.g.
              "1 / 2 to 3"
@@ -7621,6 +7631,7 @@
             max_val = max_val * 1.0;
             if(min_val <= value && max_val >= value) {
               tier_result = mod_data.tiers[i].tier;
+              affix_magic_name = mod_data.tiers[i].affix_magic_name;
             }
             
             log(tier_value_raw + "  --->   min: " + min_val + " max: " + max_val + ". Tier resolved to: " + tier_result);
@@ -7636,6 +7647,7 @@
             
             if(value >= min_avg && value <= max_avg){
               tier_result = mod_data.tiers[i].tier;
+              affix_magic_name = mod_data.tiers[i].affix_magic_name;
             }
             
             log(tier_value_raw + "  --->   min: " + min_avg + " max: " + max_avg + ". Tier resolved to: " + tier_result);
@@ -7648,17 +7660,7 @@
         }
       }
       
-      affix_callback(affix_result, tier_result);
-
-      
-       // prop = (prop + "").toLowerCase();
-       // for (var p in mods_data) {
-      //      if (mod_map.hasOwnProperty(p) && prop == (p + "").toLowerCase()) {
-      //          return mods_data[p];
-      //      }
-       // }
-      
-
+      affix_callback(affix_result, tier_result, affix_magic_name);
     }
   
   function parseType(img_url, name) {
