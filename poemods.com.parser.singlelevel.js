@@ -40,6 +40,7 @@ $('div#mod-results tr').each(function(){
     
     affix_compact = affix == 'Prefix' ? 'p' : 's';
     var xyz_mod = translatePoeModsToXyzMod(mod);
+    //log("mod: " + mod + " xyz_mod: " + xyz_mod);
     
     writeToDataRaw('"' + xyz_mod + '":{poemods:"' + mod
         + '", subtype:null, affix:"' + affix_compact + '", tiers:[');
@@ -107,7 +108,6 @@ function writeToDataRaw(str) {
 
 function log(str) {
   console.log(str);
-  data_raw += str;
 }
 
 function directText(node) {
@@ -134,11 +134,10 @@ function translatePoeModsToXyzMod(param_mod) {
 
                 /**/
 
-                /*This mod is for amulets, for STR based (Helmets	Gloves	Boots	Chests	Shields)
-                */
+               
                 "#% increased Armour":{affix:'Local Armor +%', affix2:'Armor Rating +%'},
                 "+# to Armour":{affix:'Armor Rating', affix2:'Local Armor Rating'},
-                "+# to Evasion Rating":{affix:'Local Evasion Rating'},
+                "+# to Evasion Rating":{affix:'Base Evasion Rating'},
                 "#% increased Evasion Rating":{affix:'Local Evasion Rating +%'},
 
                 /*for hybrid with stun 'Local Armor +% / Base Stun Recovery +%'*/
@@ -237,7 +236,8 @@ function translatePoeModsToXyzMod(param_mod) {
                 "+# Life gained on Kill":{affix:'Life Gained On Enemy Death'},
 
                 "# Life Regenerated per second":{affix:'Base Life Regeneration Rate Per Second'},
-                "# Mana Regenerated per second":{affix:'Mana Regeneration Rate +%'},
+                
+                "#% increased Mana Regeneration Rate":{affix:'Mana Regeneration Rate +%'},
 
                 "+# Mana Gained on Kill":{affix:'Mana Gained On Enemy Death'},
 
