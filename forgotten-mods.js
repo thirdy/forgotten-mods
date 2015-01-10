@@ -4778,7 +4778,257 @@
           {tier:2, ilvl:44, tier_value:"26 to 30", affix_magic_name:"of Slamming"},
           {tier:1, ilvl:58, tier_value:"31 to 35", affix_magic_name:"of Staggering"},
           ]},
-         }
+      },
+    
+      ring:{
+          "Adds #-# Cold Damage":{poemods:"Base Min Added Cold Dmg / Base Max Added Cold Dmg", subtype:null, affix:"p", tiers:[
+          {tier:9, ilvl:2, tier_value:"1 / 2", affix_magic_name:"Frosted"},
+          {tier:8, ilvl:13, tier_value:"3 to 4 / 7 to 8", affix_magic_name:"Chilled"},
+          {tier:7, ilvl:21, tier_value:"5 to 7 / 10 to 12", affix_magic_name:"Icy"},
+          {tier:6, ilvl:29, tier_value:"6 to 9 / 13 to 16", affix_magic_name:"Frigid"},
+          {tier:5, ilvl:37, tier_value:"8 to 11 / 16 to 19", affix_magic_name:"Freezing"},
+          {tier:4, ilvl:50, tier_value:"10 to 13 / 20 to 24", affix_magic_name:"Frozen"},
+          {tier:3, ilvl:60, tier_value:"12 to 16 / 24 to 28", affix_magic_name:"Glaciated"},
+          {tier:2, ilvl:71, tier_value:"14 to 19 / 29 to 34", affix_magic_name:"Polar"},
+          {tier:1, ilvl:77, tier_value:"17 to 22 / 34 to 40", affix_magic_name:"Entombing"},
+          ]},
+          "Adds #-# Fire Damage":{poemods:"Base Min Added Fire Dmg / Base Max Added Fire Dmg", subtype:null, affix:"p", tiers:[
+          {tier:9, ilvl:1, tier_value:"1 / 2", affix_magic_name:"Heated"},
+          {tier:8, ilvl:12, tier_value:"3 to 5 / 7 to 8", affix_magic_name:"Smoldering"},
+          {tier:7, ilvl:20, tier_value:"5 to 7 / 11 to 13", affix_magic_name:"Smoking"},
+          {tier:6, ilvl:28, tier_value:"7 to 10 / 15 to 18", affix_magic_name:"Burning"},
+          {tier:5, ilvl:36, tier_value:"9 to 12 / 19 to 22", affix_magic_name:"Flaming"},
+          {tier:4, ilvl:48, tier_value:"11 to 15 / 23 to 27", affix_magic_name:"Scorching"},
+          {tier:3, ilvl:59, tier_value:"13 to 18 / 27 to 31", affix_magic_name:"Incinerating"},
+          {tier:2, ilvl:70, tier_value:"16 to 22 / 32 to 38", affix_magic_name:"Blasting"},
+          {tier:1, ilvl:76, tier_value:"19 to 25 / 39 to 45", affix_magic_name:"Cremating"},
+          ]},
+          "Adds #-# Lightning Damage":{poemods:"Base Min Added Lightning Dmg / Base Max Added Lightning Dmg", subtype:null, affix:"p", tiers:[
+          {tier:9, ilvl:3, tier_value:"1 / 5", affix_magic_name:"Humming"},
+          {tier:8, ilvl:13, tier_value:"1 / 14 to 15", affix_magic_name:"Buzzing"},
+          {tier:7, ilvl:22, tier_value:"1 to 2 / 22 to 23", affix_magic_name:"Snapping"},
+          {tier:6, ilvl:30, tier_value:"1 to 2 / 27 to 28", affix_magic_name:"Crackling"},
+          {tier:5, ilvl:38, tier_value:"1 to 3 / 33 to 34", affix_magic_name:"Sparking"},
+          {tier:4, ilvl:50, tier_value:"1 to 4 / 40 to 43", affix_magic_name:"Arcing"},
+          {tier:3, ilvl:58, tier_value:"2 to 5 / 47 to 50", affix_magic_name:"Shocking"},
+          {tier:2, ilvl:69, tier_value:"3 to 6 / 57 to 61", affix_magic_name:"Discharging"},
+          {tier:1, ilvl:76, tier_value:"3 to 7 / 68 to 72", affix_magic_name:"Electrocuting"},
+          ]},
+          "Adds #-# Physical Damage":{poemods:"Base Min Added Physical Dmg / Base Max Added Physical Dmg", subtype:null, affix:"p", tiers:[
+          {tier:6, ilvl:5, tier_value:"1 / 2", affix_magic_name:"Glinting"},
+          {tier:5, ilvl:13, tier_value:"2 to 3 / 4 to 5", affix_magic_name:"Burnished"},
+          {tier:4, ilvl:19, tier_value:"3 to 4 / 6 to 7", affix_magic_name:"Polished"},
+          {tier:3, ilvl:28, tier_value:"4 to 6 / 9 to 10", affix_magic_name:"Honed"},
+          {tier:2, ilvl:35, tier_value:"5 to 7 / 11 to 12", affix_magic_name:"Gleaming"},
+          {tier:1, ilvl:44, tier_value:"6 to 9 / 13 to 15", affix_magic_name:"Annealed"},
+          ]},
+          "+# to maximum Energy Shield":{poemods:"Base Max Energy Shield", subtype:null, affix:"p", tiers:[
+          {tier:10, ilvl:3, tier_value:"1 to 3", affix_magic_name:"Shining"},
+          {tier:9, ilvl:11, tier_value:"4 to 8", affix_magic_name:"Glimmering"},
+          {tier:8, ilvl:17, tier_value:"9 to 12", affix_magic_name:"Glittering"},
+          {tier:7, ilvl:23, tier_value:"13 to 15", affix_magic_name:"Glowing"},
+          {tier:6, ilvl:29, tier_value:"16 to 19", affix_magic_name:"Radiating"},
+          {tier:5, ilvl:35, tier_value:"20 to 22", affix_magic_name:"Pulsing"},
+          {tier:4, ilvl:42, tier_value:"23 to 26", affix_magic_name:"Seething"},
+          {tier:3, ilvl:50, tier_value:"27 to 31", affix_magic_name:"Blazing"},
+          {tier:2, ilvl:59, tier_value:"32 to 37", affix_magic_name:"Scintillating"},
+          {tier:1, ilvl:68, tier_value:"38 to 43", affix_magic_name:"Incandescent"},
+          ]},
+          "+# to Evasion Rating":{poemods:"Base Evasion Rating", subtype:null, affix:"p", tiers:[
+          {tier:6, ilvl:1, tier_value:"3 to 10", affix_magic_name:"Agile"},
+          {tier:5, ilvl:18, tier_value:"11 to 35", affix_magic_name:"Dancer's"},
+          {tier:4, ilvl:29, tier_value:"36 to 60", affix_magic_name:"Acrobat's"},
+          {tier:3, ilvl:42, tier_value:"61 to 80", affix_magic_name:"Fleet"},
+          {tier:2, ilvl:58, tier_value:"81 to 120", affix_magic_name:"Blurred"},
+          {tier:1, ilvl:72, tier_value:"121 to 150", affix_magic_name:"Phased"},
+          ]},
+          "#% increased Rarity of Items found":{poemods:"Base Item Found Rarity +%", subtype:null, affix:"s", tiers:[
+          {tier:4, ilvl:3, tier_value:"6 to 10", affix_magic_name:"of Plunder"},
+          {tier:3, ilvl:30, tier_value:"11 to 14", affix_magic_name:"of Raiding"},
+          {tier:2, ilvl:53, tier_value:"15 to 20", affix_magic_name:"of Archaeology"},
+          {tier:1, ilvl:75, tier_value:"21 to 26", affix_magic_name:"of Excavation"},
+          ]},
+          "+# to maximum Life":{poemods:"Base Max Life", subtype:null, affix:"p", tiers:[
+          {tier:7, ilvl:1, tier_value:"10 to 19", affix_magic_name:"Healthy"},
+          {tier:6, ilvl:11, tier_value:"20 to 29", affix_magic_name:"Sanguine"},
+          {tier:5, ilvl:18, tier_value:"30 to 39", affix_magic_name:"Stalwart"},
+          {tier:4, ilvl:24, tier_value:"40 to 49", affix_magic_name:"Stout"},
+          {tier:3, ilvl:30, tier_value:"50 to 59", affix_magic_name:"Robust"},
+          {tier:2, ilvl:36, tier_value:"60 to 69", affix_magic_name:"Rotund"},
+          {tier:1, ilvl:44, tier_value:"70 to 79", affix_magic_name:"Virile"},
+          ]},
+          "#% of Physical Attack Damage Leeched as Life":{poemods:"Life Leech From Physical Dmg %", subtype:null, affix:"p", tiers:[
+          {tier:1, ilvl:9, tier_value:"1 to 2", affix_magic_name:"Remora's"},
+          ]},
+          "+# to maximum Mana":{poemods:"Base Max Mana", subtype:null, affix:"p", tiers:[
+          {tier:11, ilvl:1, tier_value:"15 to 19", affix_magic_name:"Beryl"},
+          {tier:10, ilvl:11, tier_value:"20 to 24", affix_magic_name:"Cobalt"},
+          {tier:9, ilvl:17, tier_value:"25 to 29", affix_magic_name:"Azure"},
+          {tier:8, ilvl:23, tier_value:"30 to 34", affix_magic_name:"Sapphire"},
+          {tier:7, ilvl:29, tier_value:"35 to 39", affix_magic_name:"Cerulean"},
+          {tier:6, ilvl:35, tier_value:"40 to 44", affix_magic_name:"Aqua"},
+          {tier:5, ilvl:42, tier_value:"45 to 49", affix_magic_name:"Opalescent"},
+          {tier:4, ilvl:51, tier_value:"50 to 54", affix_magic_name:"Gentian"},
+          {tier:3, ilvl:60, tier_value:"55 to 59", affix_magic_name:"Chalybeous"},
+          {tier:2, ilvl:69, tier_value:"60 to 64", affix_magic_name:"Mazarine"},
+          {tier:1, ilvl:75, tier_value:"65 to 68", affix_magic_name:"Blue"},
+          ]},
+          "#% of Physical Attack Damage Leeched as Mana":{poemods:"Mana Leech From Physical Dmg %", subtype:null, affix:"p", tiers:[
+          {tier:1, ilvl:9, tier_value:"1 to 2", affix_magic_name:"Thirsty"},
+          ]},
+          "#% increased Elemental Damage with Weapons":{poemods:"Weapon Elemental Dmg +%", subtype:null, affix:"p", tiers:[
+          {tier:4, ilvl:4, tier_value:"5 to 10", affix_magic_name:"Catalyzing"},
+          {tier:3, ilvl:15, tier_value:"11 to 20", affix_magic_name:"Infusing"},
+          {tier:2, ilvl:30, tier_value:"21 to 30", affix_magic_name:"Empowering"},
+          {tier:1, ilvl:75, tier_value:"31 to 36", affix_magic_name:"Unleashed"},
+          ]},
+          "+# to Accuracy Rating":{poemods:"Accuracy Rating", subtype:null, affix:"s", tiers:[
+          {tier:9, ilvl:1, tier_value:"5 to 15", affix_magic_name:"of Calm"},
+          {tier:8, ilvl:12, tier_value:"16 to 60", affix_magic_name:"of Steadiness"},
+          {tier:7, ilvl:20, tier_value:"61 to 100", affix_magic_name:"of Accuracy"},
+          {tier:6, ilvl:26, tier_value:"101 to 130", affix_magic_name:"of Precision"},
+          {tier:5, ilvl:33, tier_value:"131 to 165", affix_magic_name:"of the Sniper"},
+          {tier:4, ilvl:41, tier_value:"166 to 200", affix_magic_name:"of the Marksman"},
+          {tier:3, ilvl:50, tier_value:"201 to 250", affix_magic_name:"of the Deadeye"},
+          {tier:2, ilvl:63, tier_value:"251 to 320", affix_magic_name:"of the Ranger"},
+          {tier:1, ilvl:76, tier_value:"321 to 400", affix_magic_name:"of the Assassin"},
+          ]},
+          "undefined":{poemods:"Light Radius / +Accuracy Rating", subtype:null, affix:"s", tiers:[
+          {tier:3, ilvl:8, tier_value:"5 / 10 to 20", affix_magic_name:"of Shining"},
+          {tier:2, ilvl:15, tier_value:"10 / 21 to 40", affix_magic_name:"of Light"},
+          {tier:1, ilvl:30, tier_value:"15 / 5 to 10", affix_magic_name:"of Radiance"},
+          ]},
+          "#% increased Attack Speed":{poemods:"Attack Speed +%", subtype:null, affix:"s", tiers:[
+          {tier:1, ilvl:1, tier_value:"5 to 7", affix_magic_name:"of Skill"},
+          ]},
+          "+# to all Attributes":{poemods:"Additional All Attributes", subtype:null, affix:"s", tiers:[
+          {tier:4, ilvl:1, tier_value:"1 to 4", affix_magic_name:"of the Clouds"},
+          {tier:3, ilvl:11, tier_value:"5 to 8", affix_magic_name:"of the Sky"},
+          {tier:2, ilvl:22, tier_value:"9 to 12", affix_magic_name:"of the Meteor"},
+          {tier:1, ilvl:33, tier_value:"13 to 16", affix_magic_name:"of the Comet"},
+          ]},
+          "+# to Dexterity":{poemods:"Additional Dexterity", subtype:null, affix:"s", tiers:[
+          {tier:8, ilvl:1, tier_value:"8 to 12", affix_magic_name:"of the Mongoose"},
+          {tier:7, ilvl:11, tier_value:"13 to 17", affix_magic_name:"of the Lynx"},
+          {tier:6, ilvl:22, tier_value:"18 to 22", affix_magic_name:"of the Fox"},
+          {tier:5, ilvl:33, tier_value:"23 to 27", affix_magic_name:"of the Falcon"},
+          {tier:4, ilvl:44, tier_value:"28 to 32", affix_magic_name:"of the Panther"},
+          {tier:3, ilvl:55, tier_value:"33 to 37", affix_magic_name:"of the Leopard"},
+          {tier:2, ilvl:66, tier_value:"38 to 42", affix_magic_name:"of the Jaguar"},
+          {tier:1, ilvl:74, tier_value:"43 to 50", affix_magic_name:"of the Phantasm"},
+          ]},
+          "+# to Intelligence":{poemods:"Additional Intelligence", subtype:null, affix:"s", tiers:[
+          {tier:8, ilvl:1, tier_value:"8 to 12", affix_magic_name:"of the Pupil"},
+          {tier:7, ilvl:11, tier_value:"13 to 17", affix_magic_name:"of the Student"},
+          {tier:6, ilvl:22, tier_value:"18 to 22", affix_magic_name:"of the Prodigy"},
+          {tier:5, ilvl:33, tier_value:"23 to 27", affix_magic_name:"of the Augur"},
+          {tier:4, ilvl:44, tier_value:"28 to 32", affix_magic_name:"of the Philosopher"},
+          {tier:3, ilvl:55, tier_value:"33 to 37", affix_magic_name:"of the Sage"},
+          {tier:2, ilvl:66, tier_value:"38 to 42", affix_magic_name:"of the Savant"},
+          {tier:1, ilvl:74, tier_value:"43 to 50", affix_magic_name:"of the Virtuoso"},
+          ]},
+          "+# to Strength":{poemods:"Additional Strength", subtype:null, affix:"s", tiers:[
+          {tier:8, ilvl:1, tier_value:"8 to 12", affix_magic_name:"of the Brute"},
+          {tier:7, ilvl:11, tier_value:"13 to 17", affix_magic_name:"of the Wrestler"},
+          {tier:6, ilvl:22, tier_value:"18 to 22", affix_magic_name:"of the Bear"},
+          {tier:5, ilvl:33, tier_value:"23 to 27", affix_magic_name:"of the Lion"},
+          {tier:4, ilvl:44, tier_value:"28 to 32", affix_magic_name:"of the Gorilla"},
+          {tier:3, ilvl:55, tier_value:"33 to 37", affix_magic_name:"of the Goliath"},
+          {tier:2, ilvl:66, tier_value:"38 to 42", affix_magic_name:"of the Leviathan"},
+          {tier:1, ilvl:74, tier_value:"43 to 50", affix_magic_name:"of the Titan"},
+          ]},
+          "#% increased Cast Speed":{poemods:"Base Cast Speed +%", subtype:null, affix:"s", tiers:[
+          {tier:1, ilvl:2, tier_value:"5 to 7", affix_magic_name:"of Talent"},
+          ]},
+          "#% increased Cold Damage":{poemods:"Cold Dmg +%", subtype:null, affix:"s", tiers:[
+          {tier:2, ilvl:12, tier_value:"3 to 7", affix_magic_name:"of SNow"},
+          {tier:1, ilvl:24, tier_value:"8 to 12", affix_magic_name:"of Sleet"},
+          ]},
+          "#% increased Fire Damage":{poemods:"Fire Dmg +%", subtype:null, affix:"s", tiers:[
+          {tier:2, ilvl:8, tier_value:"3 to 7", affix_magic_name:"of Embers"},
+          {tier:1, ilvl:22, tier_value:"8 to 12", affix_magic_name:"of Coals"},
+          ]},
+          "#% increased Lightning Damage":{poemods:"Lightning Dmg +%", subtype:null, affix:"s", tiers:[
+          {tier:2, ilvl:10, tier_value:"3 to 7", affix_magic_name:"of Sparks"},
+          {tier:1, ilvl:23, tier_value:"8 to 12", affix_magic_name:"of Static"},
+          ]},
+          "#% increased Quantity of Items found":{poemods:"Base Item Found Quantity +%", subtype:null, affix:"s", tiers:[
+          {tier:4, ilvl:2, tier_value:"4 to 8", affix_magic_name:"of Collecting"},
+          {tier:3, ilvl:32, tier_value:"9 to 12", affix_magic_name:"of Gathering"},
+          {tier:2, ilvl:55, tier_value:"13 to 16", affix_magic_name:"of Hoarding"},
+          {tier:1, ilvl:77, tier_value:"17 to 20", affix_magic_name:"of Amassment"},
+          ]},
+          "+# Life gained for each Ignited Enemy hit by your Attacks":{poemods:"Life Gain Per Target", subtype:null, affix:"s", tiers:[
+          {tier:1, ilvl:8, tier_value:"2", affix_magic_name:"of Rejuvenation"},
+          ]},
+          "+# Life gained on Kill":{poemods:"Life Gained On Enemy Death", subtype:null, affix:"s", tiers:[
+          {tier:3, ilvl:1, tier_value:"2 to 4", affix_magic_name:"of Success"},
+          {tier:2, ilvl:23, tier_value:"5 to 7", affix_magic_name:"of Victory"},
+          {tier:1, ilvl:40, tier_value:"8 to 11", affix_magic_name:"of Triumph"},
+          ]},
+          "# Life Regenerated per second":{poemods:"Base Life Regeneration Rate Per Second", subtype:null, affix:"s", tiers:[
+          {tier:6, ilvl:1, tier_value:"0.7 to 1.1", affix_magic_name:"of the Newt"},
+          {tier:5, ilvl:18, tier_value:"1.6 to 2.4", affix_magic_name:"of the Lizard"},
+          {tier:4, ilvl:30, tier_value:"2.2 to 3.3", affix_magic_name:"of the Starfish"},
+          {tier:3, ilvl:44, tier_value:"2.9 to 4.3", affix_magic_name:"of the Hydra"},
+          {tier:2, ilvl:59, tier_value:"3.6 to 5.5", affix_magic_name:"of the Troll"},
+          {tier:1, ilvl:78, tier_value:"6.0 to 7.0", affix_magic_name:"of the Phoenix"},
+          ]},
+          "+# Mana Gained on Kill":{poemods:"Mana Gained On Enemy Death", subtype:null, affix:"s", tiers:[
+          {tier:3, ilvl:1, tier_value:"1", affix_magic_name:"of Absorption"},
+          {tier:2, ilvl:24, tier_value:"2 to 3", affix_magic_name:"of Osmosis"},
+          {tier:1, ilvl:40, tier_value:"4 to 6", affix_magic_name:"of Consumption"},
+          ]},
+          "# Mana Regenerated per second":{poemods:"Mana Regeneration Rate +%", subtype:null, affix:"s", tiers:[
+          {tier:6, ilvl:2, tier_value:"10 to 19", affix_magic_name:"of Excitement"},
+          {tier:5, ilvl:18, tier_value:"20 to 29", affix_magic_name:"of Joy"},
+          {tier:4, ilvl:29, tier_value:"30 to 39", affix_magic_name:"of Elation"},
+          {tier:3, ilvl:42, tier_value:"40 to 49", affix_magic_name:"of Bliss"},
+          {tier:2, ilvl:55, tier_value:"50 to 59", affix_magic_name:"of Euphoria"},
+          {tier:1, ilvl:79, tier_value:"60 to 69", affix_magic_name:"of Nirvana"},
+          ]},
+          "+#% to Cold Resistance":{poemods:"Base Cold Dmg Resistance %", subtype:null, affix:"s", tiers:[
+          {tier:7, ilvl:1, tier_value:"6 to 11", affix_magic_name:"of the Inuit"},
+          {tier:6, ilvl:14, tier_value:"12 to 17", affix_magic_name:"of the Seal"},
+          {tier:5, ilvl:26, tier_value:"18 to 23", affix_magic_name:"of the Penguin"},
+          {tier:4, ilvl:38, tier_value:"24 to 29", affix_magic_name:"of the Yeti"},
+          {tier:3, ilvl:50, tier_value:"30 to 35", affix_magic_name:"of the Walrus"},
+          {tier:2, ilvl:60, tier_value:"36 to 41", affix_magic_name:"of the Polar Bear"},
+          {tier:1, ilvl:72, tier_value:"42 to 45", affix_magic_name:"of the Ice"},
+          ]},
+          "+#% to Fire Resistance":{poemods:"Base Fire Dmg Resistance %", subtype:null, affix:"s", tiers:[
+          {tier:7, ilvl:1, tier_value:"6 to 11", affix_magic_name:"of the Whelpling"},
+          {tier:6, ilvl:12, tier_value:"12 to 17", affix_magic_name:"of the Salamander"},
+          {tier:5, ilvl:24, tier_value:"18 to 23", affix_magic_name:"of the Drake"},
+          {tier:4, ilvl:36, tier_value:"24 to 29", affix_magic_name:"of the Kiln"},
+          {tier:3, ilvl:48, tier_value:"30 to 35", affix_magic_name:"of the Furnace"},
+          {tier:2, ilvl:60, tier_value:"36 to 41", affix_magic_name:"of the Volcano"},
+          {tier:1, ilvl:72, tier_value:"42 to 45", affix_magic_name:"of the Magma"},
+          ]},
+          "+#% to Lightning Resistance":{poemods:"Base Lightning Dmg Resistance %", subtype:null, affix:"s", tiers:[
+          {tier:7, ilvl:1, tier_value:"6 to 11", affix_magic_name:"of the Cloud"},
+          {tier:6, ilvl:13, tier_value:"12 to 17", affix_magic_name:"of the Squall"},
+          {tier:5, ilvl:25, tier_value:"18 to 23", affix_magic_name:"of the Storm"},
+          {tier:4, ilvl:37, tier_value:"24 to 29", affix_magic_name:"of the Thunderhead"},
+          {tier:3, ilvl:49, tier_value:"30 to 35", affix_magic_name:"of the Tempest"},
+          {tier:2, ilvl:60, tier_value:"36 to 41", affix_magic_name:"of the Maelstrom"},
+          {tier:1, ilvl:72, tier_value:"42 to 45", affix_magic_name:"of the Lightning"},
+          ]},
+          "+#% to Chaos Resistance":{poemods:"Base Chaos Dmg Resistance %", subtype:null, affix:"s", tiers:[
+          {tier:5, ilvl:16, tier_value:"5 to 10", affix_magic_name:"of the Lost"},
+          {tier:4, ilvl:30, tier_value:"11 to 15", affix_magic_name:"of Banishment"},
+          {tier:3, ilvl:44, tier_value:"16 to 20", affix_magic_name:"of Eviction"},
+          {tier:2, ilvl:56, tier_value:"21 to 25", affix_magic_name:"of Expulsion"},
+          {tier:1, ilvl:65, tier_value:"26 to 30", affix_magic_name:"of Exile"},
+          ]},
+          "+#% to all Elemental Resistances":{poemods:"Base Resist All Elements %", subtype:null, affix:"s", tiers:[
+          {tier:5, ilvl:12, tier_value:"3 to 5", affix_magic_name:"of the Crystal"},
+          {tier:4, ilvl:24, tier_value:"6 to 8", affix_magic_name:"of the Prism"},
+          {tier:3, ilvl:36, tier_value:"9 to 11", affix_magic_name:"of the Kaleidoscope"},
+          {tier:2, ilvl:48, tier_value:"12 to 14", affix_magic_name:"of Variegation"},
+          {tier:1, ilvl:60, tier_value:"15 to 16", affix_magic_name:"of the Rainbow"},
+          ]},
+          },
     
 } /* mod_data closing curly */
   
@@ -4906,6 +5156,7 @@
       if(type == 'BodyArmours') type = 'chest';
       if(type == 'Shields') type = 'shield';
       if(type == 'Daggers') type = 'dagger';
+      if(type == 'Rings') type = 'ring';
       
       
     
@@ -4981,6 +5232,14 @@
             max_high_val = parseInt(max_high_val);
           }
           
+          /* 1 / 2 */
+          if (/^\d+\s\/\s\d+$/.test(tier_value_raw)) {
+            min_val  = /^(\d+)\s\/\s\d+$/.exec(tier_value_raw)[1];
+            min_val  = parseInt(min_val);
+            max_val  = /^\d+\s\/\s(\d+)$/.exec(tier_value_raw)[1];
+            max_val  = parseInt(max_val);
+          }
+          
           if(min_val != null && max_val != null) {
             
             min_val = min_val * 1.0;
@@ -5006,7 +5265,7 @@
             
             log(tier_value_raw + "  --->   min: " + min_avg + " max: " + max_avg + ". Tier resolved to: " + tier_result);
           } else {
-            log(tier_value_raw + "  --->   min: " + min_val + " max: " + max_val + ". Tier resolved to: " + tier_result);
+            log("Unhandled: " + tier_value_raw + "  --->   min: " + min_val + " max: " + max_val + ". Tier resolved to: " + tier_result);
           }
           
           if(tier_result != -1)
