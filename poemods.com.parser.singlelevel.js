@@ -89,7 +89,7 @@ log(final_mod_map_key + ":{");
 
 for (mod_key in final_mod_map) {
   
-  log('"' + mod_key + '":{poemods:"' + final_mod_map[mod_key].poemods
+  log(mod_key + ':{poemods:"' + final_mod_map[mod_key].poemods
         + '", subtype:null, affix:"' + final_mod_map[mod_key].affix + '", tiers:[');
   
   var tier_array = final_mod_map[mod_key].tiers;
