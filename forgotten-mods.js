@@ -7120,6 +7120,7 @@
        1h Swords: http://poe.trade/search/terauganomomar
        2h Swords: http://poe.trade/search/tototusimiteta
        2h Axes: http://poe.trade/search/itahutominomar
+       1h Axes: http://poe.trade/search/ahuwororesikun
       
       */
       
@@ -7138,7 +7139,9 @@
       if(type == 'OneHandSwords') type = 'onehandswordaxe';
       if(type == 'Rapiers') type = 'onehandswordaxe';
       if(type == 'TwoHandSwords') type = 'twohandswordaxe';
+      if(type == 'OneHandAxes') type = 'onehandswordaxe';
       if(type == 'TwoHandAxes') type = 'twohandswordaxe';
+      
       
       
      // log(param_mod);
