@@ -73,21 +73,30 @@ writeToDataRaw("}");
 
 eval("var mod_map = {" + data_raw + "}");
 
-/* re-roll the tier value*/
+/* re-roll the tier value and we wanna print it in a compact format */
 for (final_mod_map_key in mod_map) break;
 var final_mod_map = mod_map[final_mod_map_key];
 
+log(final_mod_map_key + ":{");
+
 for (mod_key in final_mod_map) {
+  
+  log('"' + mod_key + '":{poemods:"' + final_mod_map[mod_key].poemods
+        + '", subtype:null, affix:"' + final_mod_map[mod_key].affix + '", tiers:[');
+  
   var tier_array = final_mod_map[mod_key].tiers;
   for(i = 0; i < tier_array.length; i++) {
     tier_array[i].tier = tier_array.length - i;
+    var str = tier_array[i].toSource();
+    log(str.substring(1, str.length - 1) + ',');
   }
+  
+  
+  
+  log("]},");
 }
 
-
-/* print final */
-log(final_mod_map_key + ":" + final_mod_map.toSource());
-
+log("},");
 
 //log(mod_map.toSource());
 //log(data_raw);
