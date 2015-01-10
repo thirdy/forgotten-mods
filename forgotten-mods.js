@@ -4979,7 +4979,7 @@
           {tier:2, ilvl:24, tier_value:"2 to 3", affix_magic_name:"of Osmosis"},
           {tier:1, ilvl:40, tier_value:"4 to 6", affix_magic_name:"of Consumption"},
           ]},
-          "# Mana Regenerated per second":{poemods:"Mana Regeneration Rate +%", subtype:null, affix:"s", tiers:[
+          "#% increased Mana Regeneration Rate":{poemods:"Mana Regeneration Rate +%", subtype:null, affix:"s", tiers:[
           {tier:6, ilvl:2, tier_value:"10 to 19", affix_magic_name:"of Excitement"},
           {tier:5, ilvl:18, tier_value:"20 to 29", affix_magic_name:"of Joy"},
           {tier:4, ilvl:29, tier_value:"30 to 39", affix_magic_name:"of Elation"},
@@ -5147,7 +5147,7 @@
        Helmets: http://poe.trade/search/otenararininat
        Chests: http://poe.trade/search/henotuitasihos
        Shields: http://poe.trade/search/ahuichuwosakar
-       Daggers: http://poe.trade/search/ouwomitikabani
+       Daggers: http://poe.trade/search/aukakitimiatas
       
       */
       
