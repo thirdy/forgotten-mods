@@ -138,7 +138,7 @@ function translatePoeModsToXyzMod(param_mod) {
                 "#% increased Armour":{affix:'Local Armor +%', affix2:'Armor Rating +%'},
                 "+# to Armour":{affix:'Armor Rating', affix2:'Local Armor Rating'},
                 "+# to Evasion Rating":{affix:'Base Evasion Rating'},
-                "#% increased Evasion Rating":{affix:'Local Evasion Rating +%'},
+                "#% increased Evasion Rating":{affix:'Local Evasion Rating +%', affix2:'Evasion Rating +%'},
 
                 /*for hybrid with stun 'Local Armor +% / Base Stun Recovery +%'*/
 
