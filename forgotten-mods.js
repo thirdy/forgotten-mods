@@ -1,4 +1,4 @@
-// Path of Exile Forgotten Mods 0.5 - A simple bookmarklet that will augment poe.trade with more info.
+// Path of Exile Forgotten Mods 0.6.1 - A simple bookmarklet that will augment poe.trade with more info.
 // Check out the forum thread - http://www.pathofexile.com/forum/edit-thread/1164052
 // PM me in game: ManicCompression
 // Code prettyfied by http://jsbeautifier.org/
@@ -7381,6 +7381,135 @@
           {tier:1, ilvl:58, tier_value:"14 to 15", affix_magic_name:"of the Gladiator"},
           ]},
           },
+    belt:{
+          "Reflects # Physical Damage to Melee Attackers":{poemods:"Physical Dmg To Return To Melee Attacker", subtype:null, affix:"p", tiers:[
+          {tier:4, ilvl:1, tier_value:"1 to 4", affix_magic_name:"Thorny"},
+          {tier:3, ilvl:10, tier_value:"5 to 10", affix_magic_name:"Spiny"},
+          {tier:2, ilvl:20, tier_value:"11 to 24", affix_magic_name:"Barbed"},
+          {tier:1, ilvl:35, tier_value:"25 to 50", affix_magic_name:"Jagged"},
+          ]},
+          "+# to Armour":{poemods:"Armor Rating", subtype:null, affix:"p", tiers:[
+          {tier:6, ilvl:1, tier_value:"3 to 10", affix_magic_name:"Lacquered"},
+          {tier:5, ilvl:18, tier_value:"11 to 35", affix_magic_name:"Studded"},
+          {tier:4, ilvl:30, tier_value:"36 to 60", affix_magic_name:"Ribbed"},
+          {tier:3, ilvl:44, tier_value:"61 to 138", affix_magic_name:"Fortified"},
+          {tier:2, ilvl:57, tier_value:"139 to 322", affix_magic_name:"Plated"},
+          {tier:1, ilvl:71, tier_value:"323 to 400", affix_magic_name:"Carapaced"},
+          ]},
+          "+# to maximum Energy Shield":{poemods:"Base Max Energy Shield", subtype:null, affix:"p", tiers:[
+          {tier:11, ilvl:3, tier_value:"1 to 3", affix_magic_name:"Shining"},
+          {tier:10, ilvl:11, tier_value:"4 to 8", affix_magic_name:"Glimmering"},
+          {tier:9, ilvl:17, tier_value:"9 to 12", affix_magic_name:"Glittering"},
+          {tier:8, ilvl:23, tier_value:"13 to 15", affix_magic_name:"Glowing"},
+          {tier:7, ilvl:29, tier_value:"16 to 19", affix_magic_name:"Radiating"},
+          {tier:6, ilvl:35, tier_value:"20 to 22", affix_magic_name:"Pulsing"},
+          {tier:5, ilvl:42, tier_value:"23 to 26", affix_magic_name:"Seething"},
+          {tier:4, ilvl:50, tier_value:"27 to 31", affix_magic_name:"Blazing"},
+          {tier:3, ilvl:59, tier_value:"32 to 37", affix_magic_name:"Scintillating"},
+          {tier:2, ilvl:68, tier_value:"38 to 43", affix_magic_name:"Incandescent"},
+          {tier:1, ilvl:74, tier_value:"44 to 47", affix_magic_name:"Resplendent"},
+          ]},
+          "undefined":{poemods:"Flask Charges Used +%", subtype:null, affix:"s", tiers:[
+          {tier:1, ilvl:3, tier_value:"20 to -10", affix_magic_name:"of Sipping"},
+          ]},
+          "+# to maximum Life":{poemods:"Base Max Life", subtype:null, affix:"p", tiers:[
+          {tier:9, ilvl:1, tier_value:"10 to 19", affix_magic_name:"Healthy"},
+          {tier:8, ilvl:11, tier_value:"20 to 29", affix_magic_name:"Sanguine"},
+          {tier:7, ilvl:18, tier_value:"30 to 39", affix_magic_name:"Stalwart"},
+          {tier:6, ilvl:24, tier_value:"40 to 49", affix_magic_name:"Stout"},
+          {tier:5, ilvl:30, tier_value:"50 to 59", affix_magic_name:"Robust"},
+          {tier:4, ilvl:36, tier_value:"60 to 69", affix_magic_name:"Rotund"},
+          {tier:3, ilvl:44, tier_value:"70 to 79", affix_magic_name:"Virile"},
+          {tier:2, ilvl:54, tier_value:"80 to 89", affix_magic_name:"Athlete's"},
+          {tier:1, ilvl:64, tier_value:"90 to 99", affix_magic_name:"Fecund"},
+          ]},
+          "#% increased Elemental Damage with Weapons":{poemods:"Weapon Elemental Dmg +%", subtype:null, affix:"p", tiers:[
+          {tier:4, ilvl:4, tier_value:"5 to 10", affix_magic_name:"Catalyzing"},
+          {tier:3, ilvl:15, tier_value:"11 to 20", affix_magic_name:"Infusing"},
+          {tier:2, ilvl:30, tier_value:"21 to 30", affix_magic_name:"Empowering"},
+          {tier:1, ilvl:75, tier_value:"31 to 36", affix_magic_name:"Unleashed"},
+          ]},
+          "+# to Strength":{poemods:"Additional Strength", subtype:null, affix:"s", tiers:[
+          {tier:8, ilvl:1, tier_value:"8 to 12", affix_magic_name:"of the Brute"},
+          {tier:7, ilvl:11, tier_value:"13 to 17", affix_magic_name:"of the Wrestler"},
+          {tier:6, ilvl:22, tier_value:"18 to 22", affix_magic_name:"of the Bear"},
+          {tier:5, ilvl:33, tier_value:"23 to 27", affix_magic_name:"of the Lion"},
+          {tier:4, ilvl:44, tier_value:"28 to 32", affix_magic_name:"of the Gorilla"},
+          {tier:3, ilvl:55, tier_value:"33 to 37", affix_magic_name:"of the Goliath"},
+          {tier:2, ilvl:66, tier_value:"38 to 42", affix_magic_name:"of the Leviathan"},
+          {tier:1, ilvl:74, tier_value:"43 to 50", affix_magic_name:"of the Titan"},
+          ]},
+          "#% increased Flask Charges gained":{poemods:"Charges Gained +%", subtype:null, affix:"s", tiers:[
+          {tier:1, ilvl:2, tier_value:"10 to 20", affix_magic_name:"of Refilling"},
+          ]},
+          "#% increased Flask effect duration":{poemods:"Flask Duration +%", subtype:null, affix:"s", tiers:[
+          {tier:1, ilvl:7, tier_value:"10 to 20", affix_magic_name:"of Savouring"},
+          ]},
+          "# Life Regenerated per second":{poemods:"Base Life Regeneration Rate Per Second", subtype:null, affix:"s", tiers:[
+          {tier:6, ilvl:1, tier_value:"0.7 to 1.1", affix_magic_name:"of the Newt"},
+          {tier:5, ilvl:18, tier_value:"1.6 to 2.4", affix_magic_name:"of the Lizard"},
+          {tier:4, ilvl:30, tier_value:"2.2 to 3.3", affix_magic_name:"of the Starfish"},
+          {tier:3, ilvl:44, tier_value:"2.9 to 4.3", affix_magic_name:"of the Hydra"},
+          {tier:2, ilvl:59, tier_value:"3.6 to 5.5", affix_magic_name:"of the Troll"},
+          {tier:1, ilvl:78, tier_value:"6.0 to 7.0", affix_magic_name:"of the Phoenix"},
+          ]},
+          "+#% to Cold Resistance":{poemods:"Base Cold Dmg Resistance %", subtype:null, affix:"s", tiers:[
+          {tier:7, ilvl:1, tier_value:"6 to 11", affix_magic_name:"of the Inuit"},
+          {tier:6, ilvl:14, tier_value:"12 to 17", affix_magic_name:"of the Seal"},
+          {tier:5, ilvl:26, tier_value:"18 to 23", affix_magic_name:"of the Penguin"},
+          {tier:4, ilvl:38, tier_value:"24 to 29", affix_magic_name:"of the Yeti"},
+          {tier:3, ilvl:50, tier_value:"30 to 35", affix_magic_name:"of the Walrus"},
+          {tier:2, ilvl:60, tier_value:"36 to 41", affix_magic_name:"of the Polar Bear"},
+          {tier:1, ilvl:72, tier_value:"42 to 45", affix_magic_name:"of the Ice"},
+          ]},
+          "+#% to Fire Resistance":{poemods:"Base Fire Dmg Resistance %", subtype:null, affix:"s", tiers:[
+          {tier:7, ilvl:1, tier_value:"6 to 11", affix_magic_name:"of the Whelpling"},
+          {tier:6, ilvl:12, tier_value:"12 to 17", affix_magic_name:"of the Salamander"},
+          {tier:5, ilvl:24, tier_value:"18 to 23", affix_magic_name:"of the Drake"},
+          {tier:4, ilvl:36, tier_value:"24 to 29", affix_magic_name:"of the Kiln"},
+          {tier:3, ilvl:48, tier_value:"30 to 35", affix_magic_name:"of the Furnace"},
+          {tier:2, ilvl:60, tier_value:"36 to 41", affix_magic_name:"of the Volcano"},
+          {tier:1, ilvl:72, tier_value:"42 to 45", affix_magic_name:"of the Magma"},
+          ]},
+          "+#% to Lightning Resistance":{poemods:"Base Lightning Dmg Resistance %", subtype:null, affix:"s", tiers:[
+          {tier:7, ilvl:1, tier_value:"6 to 11", affix_magic_name:"of the Cloud"},
+          {tier:6, ilvl:13, tier_value:"12 to 17", affix_magic_name:"of the Squall"},
+          {tier:5, ilvl:25, tier_value:"18 to 23", affix_magic_name:"of the Storm"},
+          {tier:4, ilvl:37, tier_value:"24 to 29", affix_magic_name:"of the Thunderhead"},
+          {tier:3, ilvl:49, tier_value:"30 to 35", affix_magic_name:"of the Tempest"},
+          {tier:2, ilvl:60, tier_value:"36 to 41", affix_magic_name:"of the Maelstrom"},
+          {tier:1, ilvl:72, tier_value:"42 to 45", affix_magic_name:"of the Lightning"},
+          ]},
+          "+#% to Chaos Resistance":{poemods:"Base Chaos Dmg Resistance %", subtype:null, affix:"s", tiers:[
+          {tier:5, ilvl:16, tier_value:"5 to 10", affix_magic_name:"of the Lost"},
+          {tier:4, ilvl:30, tier_value:"11 to 15", affix_magic_name:"of Banishment"},
+          {tier:3, ilvl:44, tier_value:"16 to 20", affix_magic_name:"of Eviction"},
+          {tier:2, ilvl:56, tier_value:"21 to 25", affix_magic_name:"of Expulsion"},
+          {tier:1, ilvl:65, tier_value:"26 to 30", affix_magic_name:"of Exile"},
+          ]},
+          "#% increased Stun Duration on Enemies":{poemods:"Base Stun Duration +%", subtype:null, affix:"s", tiers:[
+          {tier:5, ilvl:5, tier_value:"11 to 15", affix_magic_name:"of Impact"},
+          {tier:4, ilvl:18, tier_value:"16 to 20", affix_magic_name:"of Dazing"},
+          {tier:3, ilvl:30, tier_value:"21 to 25", affix_magic_name:"of Stunning"},
+          {tier:2, ilvl:44, tier_value:"26 to 30", affix_magic_name:"of Slamming"},
+          {tier:1, ilvl:58, tier_value:"31 to 35", affix_magic_name:"of Staggering"},
+          ]},
+          "#% reduced Enemy Stun Threshold":{poemods:"Base Stun Threshold Reduction +%", subtype:null, affix:"s", tiers:[
+          {tier:5, ilvl:5, tier_value:"5 to 7", affix_magic_name:"of the Pugilist"},
+          {tier:4, ilvl:20, tier_value:"8 to 9", affix_magic_name:"of the Brawler"},
+          {tier:3, ilvl:30, tier_value:"10 to 11", affix_magic_name:"of the Boxer"},
+          {tier:2, ilvl:44, tier_value:"12 to 13", affix_magic_name:"of the Combatant"},
+          {tier:1, ilvl:58, tier_value:"14 to 15", affix_magic_name:"of the Gladiator"},
+          ]},
+          "#% increased Stun Recovery":{poemods:"Base Stun Recovery +%", subtype:null, affix:"s", tiers:[
+          {tier:6, ilvl:1, tier_value:"11 to 13", affix_magic_name:"of Thick Skin"},
+          {tier:5, ilvl:17, tier_value:"14 to 16", affix_magic_name:"of Stone Skin"},
+          {tier:4, ilvl:28, tier_value:"17 to 19", affix_magic_name:"of Iron Skin"},
+          {tier:3, ilvl:42, tier_value:"20 to 22", affix_magic_name:"of Steel Skin"},
+          {tier:2, ilvl:56, tier_value:"23 to 25", affix_magic_name:"of Adamantite Skin"},
+          {tier:1, ilvl:79, tier_value:"26 to 28", affix_magic_name:"of Corundum Skin"},
+          ]},
+          },
     
 } /* mod_data closing curly */
   
@@ -7531,6 +7660,7 @@
       if(type == 'Shields') type = 'shield';
       if(type == 'Daggers') type = 'dagger';
       if(type == 'Rings') type = 'ring';
+      if(type == 'Belts') type = 'belt';
       if(type == 'Amulets') type = 'amulet';
       if(type == 'Bows') type = 'bow';
       if(type == 'Wands') type = 'wand';
