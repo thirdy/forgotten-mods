@@ -605,7 +605,7 @@
         {tier:2, ilvl:18, tier_value:"11 to 35", affix_magic_name:"Dancer's"},
         {tier:1, ilvl:29, tier_value:"36 to 60", affix_magic_name:"Acrobat's"},
         ]},
-        "undefined":{poemods:"Local Armour And Evasion +%", subtype:"Armor / Evasion", affix:"p", tiers:[
+        "#% increased Armour and Evasion":{poemods:"Local Armour And Evasion +%", subtype:"Armor / Evasion", affix:"p", tiers:[
         {tier:6, ilvl:3, tier_value:"11 to 28", affix_magic_name:"Scrapper's"},
         {tier:5, ilvl:19, tier_value:"29 to 46", affix_magic_name:"Brawler's"},
         {tier:4, ilvl:30, tier_value:"47 to 64", affix_magic_name:"Fencer's"},
@@ -688,7 +688,7 @@
         {tier:2, ilvl:3, tier_value:"6 to 10", affix_magic_name:"of Plunder"},
         {tier:1, ilvl:30, tier_value:"11 to 14", affix_magic_name:"of Raiding"},
         ]},
-        "+# Life gained for each Ignited Enemy hit by your Attacks":{poemods:"Life Gain Per Target", subtype:"Armor / Evasion", affix:"s", tiers:[
+        "+# Life gained for each Enemy hit by your Attacks":{poemods:"Life Gain Per Target", subtype:"Armor / Evasion", affix:"s", tiers:[
         {tier:1, ilvl:8, tier_value:"2", affix_magic_name:"of Rejuvenation"},
         ]},
         "+# Life gained on Kill":{poemods:"Life Gained On Enemy Death", subtype:"Armor / Evasion", affix:"s", tiers:[
@@ -7409,8 +7409,8 @@
           {tier:2, ilvl:68, tier_value:"38 to 43", affix_magic_name:"Incandescent"},
           {tier:1, ilvl:74, tier_value:"44 to 47", affix_magic_name:"Resplendent"},
           ]},
-          "undefined":{poemods:"Flask Charges Used +%", subtype:null, affix:"s", tiers:[
-          {tier:1, ilvl:3, tier_value:"20 to -10", affix_magic_name:"of Sipping"},
+          "#% reduced Flask Charges used":{poemods:"Flask Charges Used +%", subtype:null, affix:"s", tiers:[
+          {tier:1, ilvl:3, tier_value:"10 to 20", affix_magic_name:"of Sipping"},
           ]},
           "+# to maximum Life":{poemods:"Base Max Life", subtype:null, affix:"p", tiers:[
           {tier:9, ilvl:1, tier_value:"10 to 19", affix_magic_name:"Healthy"},
