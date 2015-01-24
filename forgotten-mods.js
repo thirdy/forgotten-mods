@@ -1,18 +1,42 @@
-// Path of Exile Forgotten Mods 0.7.2 - A simple bookmarklet that will augment poe.trade with more info.
+// Path of Exile Forgotten Mods 0.7.3 - A simple bookmarklet that will augment poe.trade with more info.
 // Check out the forum thread - http://www.pathofexile.com/forum/edit-thread/1164052
 // PM me in game: ManicCompression
 // Code prettyfied by http://jsbeautifier.org/
 
- 
-     /* Main code */
-     /* Target all elements with class 'item', on poe.trade this is the <tbody> which represents one serach result item */
-     var mods_data = getModsData()
+/*
+          Test Data:
+          Gloves: http://poe.trade/search/ruziosahuomoko
+          Boots: http://poe.trade/search/hoteratootaber
+          Helmets: http://poe.trade/search/otenararininat
+          Chests: http://poe.trade/search/henotuitasihos
+          Shields: http://poe.trade/search/ahuichuwosakar
+          Daggers: http://poe.trade/search/aukakitimiatas
+          Amulets: http://poe.trade/search/habaukokubetas
+          Rings: http://poe.trade/search/onahusautenyao
+          Bows: http://poe.trade/search/kinikatetomasu
+          Wands: http://poe.trade/search/oononamturukon
+          Scepters: http://poe.trade/search/atetahomazuyun
+          Claws: http://poe.trade/search/awodonarigakin
+          Staff: poe.trade/search/inahesitamomom
+          1h Swords: http://poe.trade/search/terauganomomar
+          2h Swords: http://poe.trade/search/tototusimiteta
+          2h Axes: http://poe.trade/search/itahutominomar
+          1h Axes: http://poe.trade/search/ahuwororesikun
+          1h Maces: http://poe.trade/search/nokorinokomoku
+      
+*/
+   var mods_data = getModsData()
+	 var list_of_uniques = getListOfUniques()
+	 
+	 /* Target all elements with class 'item', on poe.trade this is the <tbody> which represents one serach result item */
      var items = $('.item')
 
      $.each(items, function() {
          /* Parse Item Name */
          var name = $(this).find('.item-cell > h5 > a').text().trim();
          log(name);
+		 
+		 if(isUnique(name)) return;
 
          /* Parse image url */
          var image_url = $(this).find('.icon-td > div > img').attr('src');
@@ -96,11 +120,7 @@
                      }
                  }
              });
-
-
          });
-
-
      });
 
      function bindMouseEnterAndLeaveEvent(mod_elem) {
@@ -117,29 +137,6 @@
 
          //log(value);
          var param_mod;
-
-         /*
-          Test Data:
-          Gloves: http://poe.trade/search/ruziosahuomoko
-          Boots: http://poe.trade/search/hoteratootaber
-          Helmets: http://poe.trade/search/otenararininat
-          Chests: http://poe.trade/search/henotuitasihos
-          Shields: http://poe.trade/search/ahuichuwosakar
-          Daggers: http://poe.trade/search/aukakitimiatas
-          Amulets: http://poe.trade/search/habaukokubetas
-          Rings: http://poe.trade/search/onahusautenyao
-          Bows: http://poe.trade/search/kinikatetomasu
-          Wands: http://poe.trade/search/oononamturukon
-          Scepters: http://poe.trade/search/atetahomazuyun
-          Claws: http://poe.trade/search/awodonarigakin
-          Staff: poe.trade/search/inahesitamomom
-          1h Swords: http://poe.trade/search/terauganomomar
-          2h Swords: http://poe.trade/search/tototusimiteta
-          2h Axes: http://poe.trade/search/itahutominomar
-          1h Axes: http://poe.trade/search/ahuwororesikun
-          1h Maces: http://poe.trade/search/nokorinokomoku
-      
-         */
 
          /* some mismatch between poemods and poe.trade on item types */
          if (type == 'Helmets') type = 'Helmet';
@@ -278,7 +275,6 @@
                      break;
              }
          }
-
          affix_callback(affix_result, tier_result, affix_magic_name);
      }
 
@@ -7963,4 +7959,17 @@ return {
           },
     
 } /* mod_data closing curly */
+}
+
+function isUnique(name) {
+	for (i in list_of_uniques) {
+		var unique_name = list_of_uniques[i]
+		if(name.indexOf(unique_name) != -1)
+			return true;
+	}
+	return false;
+}
+
+function getListOfUniques() {
+	return ["The Anvil","Araku Tiki","Astramentis","Atziri's Foible","Carnage Heart","Daresso's Salute","Demigod's Presence","Eye of Chayula","The Ignomon","Karui Ward","Marylene's Fallacy","Sidhebreath","Stone of Lazhwar","Victario's Acuity","Voll's Devotion","Ungil's Harmony","Auxium","Doryani's Invitation","Headhunter","Immortal Flesh","The Magnate","Meginord's Girdle","Perandus Blazon","Sunblast","Wurm's Molt","Demigod's Bounty","Bated Breath","Belt of the Deceiver","Maligaro's Restraint","Prismweave","Andvarius","Pyre","Berek's Grip","Berek's Pass","Berek's Respite","Blackheart","Death Rush","Doedre's Damning","Dream Fragments","Gifts from Above","Kaom's Sign","Le Heup of All","Lori's Lantern","Mokou's Embrace","Ming's Heart","Perandus Signet","Romira's Banquet","Shavronne's Revelation","The Taming","Thief's Torment","Voideye","Demigod's Eye","Bloodboil","Kikazaru","Malachai's Artifice","Ngamahu's Sign","Sibyl's Lament","Tasalio's Sign","Timeclasp","Valako's Sign","Blackgleam","Broadstroke","Drillneck","Craghead","Rearguard","Hyrri's Bite","Asphyxia's Wrath","Soul Strike","Maloney's Nightfall","Ambu's Charge","Ashrend","Atziri's Splendour","Belly of the Beast","Bramblejack","Briskwrap","Bronn's Lithe","Carcass Jack","Cherrubim's Maleficence","Cloak of Flame","Cloak of Defiance","The Covenant","Daresso's Defiance","Death's Oath","Foxshade","Hyrri's Ire","Icetomb","Infernal Mantle","Kaom's Heart","Lightbane Raiment","Lightning Coil","Shavronne's Wrappings","Solaris Lorica","Soul Mantle","Tabula Rasa","Thousand Ribbons","Vis Mortis","Voll's Protector","Zahndethus' Cassock","Queen of the Forest","Incandescent Heart","The Rat Cage","Alberon's Warpath","Atziri's Step","Bones of Ullr","Darkray Vectors","Deerstalker","Demigod's Stride","Dusktoe","Gang's Momentum","Goldwyrm","Lioneye's Paws","Ondar's Flight","Rainbowstride","Shavronne's Pace","Sin Trek","Sundance","The Blood Dance","Wake of Destruction","Wanderlust","Windscream","Wondertrap","Kaom's Roots","Nomic's Storm","Asenath's Gentle Touch","Atziri's Acuity","Aurseize","Demigod's Touch","Flesh and Spirit","Meginord's Vise","Deshret's Vise","Doedre's Tenure","Facebreaker","Voidbringer","Hrimsorrow","Lochtonial Caress","Maligaro's Virtuosity","Null and Void","Ondar's Clasp","Sadima's Touch","Shackles of the Wretched","Shadows and Dust","Slitherpinch","Snakebite","Thunderfist","Vaal Caress","Abyssus","Alpha's Howl","Asenath's Mark","The Bringer of Rain","Chitus' Apex","Crown of Eyes","Crown of Thorns","Deidbell","Demigod's Triumph","Devoto's Devotion","Ezomyte Peak","Fairgraves' Tricorne","Geofri's Crest","Goldrim","The Gull","Heatshiver","Honourhome","Hrimnor's Resolve","Leer Cast","Malachai's Simula","Mindspiral","The Peregrine","Rat's Nest","Rime Gaze","The Vertex","Skullhead","Starkonja's Head","Veil of the Night","The Three Dragons","Scold's Bridle","The Broken Crown","Aegis Aurora","Atziri's Mirror","Chalice of Horrors","Chernobog's Pillar","Crest of Perandus","Daresso's Courage","Kaltenhalt","Lioneye's Remorse","Matua Tupuna","Prism Guardian","Rathpith Globe","Rise of the Phoenix","Saffell's Frame","Springleaf","Thousand Teeth Temu","Titucius' Span","Wheel of the Stormsail","Jaws of Agony","Sentari's Answer","Great Old One's Ward","Maligaro's Lens","The Screaming Eagle","Soul Taker","Dyadus","Atziri's Disfavour","The Blood Reaper","Kaom's Primacy","Limbsplit","Reaper's Pursuit","The Harvest","Wideswing","Wings of Entropy","Chin Sol","Darkscorn","Death's Harp","Infractem","Lioneye's Glare","Quill Rain","Silverbranch","Storm Cloud","Voltaxic Rift","Windripper","Doomfletch","Al Dhih","Bloodseeker","Cybil's Paw","Essentia Sanguis","Last Resort","Mortem Morsu","Bino's Kitchen Knife","Divinarius","Heartbreaker","Mark of the Doubting Knight","Mightflay","Ungil's Gauche","Brightbeak","Doon Cuebiyari","Doryani's Catalyst","Mon'tregul's Grasp","Nycta's Lantern","The Dark Seer","The Supreme Truth","Mjölner","Brutus' Lead Sprinkler","Chober Chaber","Geofri's Baptism","Hrimnor's Hymn","Kongor's Undying Rage","Marohi Erqi","Quecholli","Voidhome","Aurumvorax","Dreamfeather","Ephemeral Edge","The Goddess Bound","The Goddess Scorned","Prismatic Eclipse","Rebuke of the Vaal","Redbeak","Hyaon's Fury","Edge of Madness","Oro's Sacrifice","Queen's Decree","Rigvald's Charge","Shiversting","Terminus Est","Doomsower","Dying Breath","Fencoil","Hegemony's Era","Pillar of the Caged God","Pledge of Hands","The Searing Touch","Taryn's Shiver","Agnerod East","Agnerod North","The Blood Thorn","Apep's Rage","Lifesprig","Midnight Bargain","Moonsorrow","Void Battery","Piscator's Vigil","Reverberation Rod","Song of the Sirens","Atziri's Promise","Blood of the Karui","Divination Distillate","Doedre's Elixir","Lavianga's Spirit","Forbidden Taste","Rumi's Concoction","Taste of Hate","Acton's Nightmare","The Coward's Trial","Maelström of Chaos","Olmec's Sanctum","Poorjoy's Asylum","Vaults of Atziri","Mao Kun","Death and Taxes","Oba's Cursed Trove","Whakawairua Tuahu"]
 }
