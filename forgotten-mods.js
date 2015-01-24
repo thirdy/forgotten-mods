@@ -2,13 +2,312 @@
 // Check out the forum thread - http://www.pathofexile.com/forum/edit-thread/1164052
 // PM me in game: ManicCompression
 // Code prettyfied by http://jsbeautifier.org/
-(function() {
 
-    // The mods data is located in another js file, we import it first.
-    //var mod_data_url = "https://76f193c373fb5126bd1b5ee4fc270e3c6a1833cb.googledrive.com/host/0B4u8zcQBGBwpRll0ZzJxZ09DUUU/forgotten-mods-mod-data.js";
+ 
+     /* Main code */
+     /* Target all elements with class 'item', on poe.trade this is the <tbody> which represents one serach result item */
+     var mods_data = getModsData()
+     var items = $('.item')
+
+     $.each(items, function() {
+         /* Parse Item Name */
+         var name = $(this).find('.item-cell > h5 > a').text().trim();
+         log(name);
+
+         /* Parse image url */
+         var image_url = $(this).find('.icon-td > div > img').attr('src');
+         log(image_url);
+
+
+         var type = parseType(image_url, name);
+         log(type);
+
+
+         /* Parse Item Requirements */
+         var requirements_raw = $(this).find('.item-cell > .requirements').text();
+
+         var requirement_raw;
+
+         requirement_raw = /Level:\s(\d{1,2})/.exec(requirements_raw);
+         var lvl_req = requirement_raw != null && requirement_raw.length == 2 ? requirement_raw[1] : null;
+
+         requirement_raw = /Strength:\s(\d{1,2})/.exec(requirements_raw);
+         var str_req = requirement_raw != null && requirement_raw.length == 2 ? requirement_raw[1] : null;
+
+         requirement_raw = /Dexterity:\s(\d{1,2})/.exec(requirements_raw);
+         var dex_req = requirement_raw != null && requirement_raw.length == 2 ? requirement_raw[1] : null;
+
+         requirement_raw = /Intelligence:\s(\d{1,2})/.exec(requirements_raw);
+         var int_req = requirement_raw != null && requirement_raw.length == 2 ? requirement_raw[1] : null;
+
+         log('level req: ' + lvl_req);
+         log('strength req: ' + str_req);
+         log('dexterity req: ' + dex_req);
+         log('intelligence req: ' + int_req);
+
+         /* Parse Mods */
+         var explicit_mods = $(this).find('.mods').not('.withline').children();
+         explicit_mods = $(explicit_mods).not('.pseudo');
+
+         $.each(explicit_mods, function() {
+
+             mod = $(this).attr('data-name');
+             value = $(this).attr('data-value');
+
+
+
+             /* we skip implicit mod here */
+             if (mod.lastIndexOf('$', 0) == 0) return;
+
+             /* remove the '#' as the first character
+             // For example, this mod from the search result:
+             // <li style="" data-value="0" data-name="#Your Spells have Culling Strike" class="sortable ">Your Spells have Culling Strike</li>
+             // Here we'll get "#Your Spells have Culling Strike" class="
+             // We wanna remove the first character there.
+             // I'm not sure why it has that while the mods listed in the explicit combobox (from the search form) doesn't have one.
+             */
+             if (mod.lastIndexOf('#', 0) == 0) mod = mod.substring(1);
+
+             /* remove the '@' as the last character
+             // this character is use to denote if the mod is a master-crafted mod
+              */
+             if (endsWith(mod, '@')) mod = mod.substring(0, mod.length - 1);
+
+             log(mod + " with value: " + value);
+
+             var mod_element = this;
+
+             /* poe.trade lists these mods like this:
+             // #% increased Flask Life Recovery rate
+             // #% increased Flask Life recovery rate
+             // so we'll go case-insensitive
+              */
+             getAffix(type, mod, lvl_req, str_req != null, dex_req != null, int_req != null, value, function(affix, tier, magic_name) {
+                 log('affix resolved to: ' + affix);
+                 if (affix != null) {
+                     var tier_str = tier != -1 ? '[T' + tier + ']' : '';
+                     if (affix == 'p') {
+                         $(mod_element).prepend("<b style='color:#4584d3'>" + "<span style='display: none;'>[" + magic_name + "]</span>" + tier_str + '[prefix]' + '</b>&nbsp&nbsp');
+                         if (magic_name != null) bindMouseEnterAndLeaveEvent(mod_element);
+                     }
+                     if (affix == 's') {
+                         $(mod_element).prepend("<b style='color:#b60f2e'>" + "<span style='display: none;'>[" + magic_name + "]</span>" + tier_str + '[suffix]' + '</b>&nbsp&nbsp');
+                         if (magic_name != null) bindMouseEnterAndLeaveEvent(mod_element);
+                     }
+                 }
+             });
+
+
+         });
+
+
+     });
+
+     function bindMouseEnterAndLeaveEvent(mod_elem) {
+         $(mod_elem)
+             .mouseenter(function() {
+                 $(this).find("span").toggle();
+             })
+             .mouseleave(function() {
+                 $(this).find("span").toggle();
+             });
+     }
+
+     function getAffix(type, mod, lvl_req, is_str_req, is_dex_req, is_int_req, value, affix_callback) {
+
+         //log(value);
+         var param_mod;
+
+         /*
+          Test Data:
+          Gloves: http://poe.trade/search/ruziosahuomoko
+          Boots: http://poe.trade/search/hoteratootaber
+          Helmets: http://poe.trade/search/otenararininat
+          Chests: http://poe.trade/search/henotuitasihos
+          Shields: http://poe.trade/search/ahuichuwosakar
+          Daggers: http://poe.trade/search/aukakitimiatas
+          Amulets: http://poe.trade/search/habaukokubetas
+          Rings: http://poe.trade/search/onahusautenyao
+          Bows: http://poe.trade/search/kinikatetomasu
+          Wands: http://poe.trade/search/oononamturukon
+          Scepters: http://poe.trade/search/atetahomazuyun
+          Claws: http://poe.trade/search/awodonarigakin
+          Staff: poe.trade/search/inahesitamomom
+          1h Swords: http://poe.trade/search/terauganomomar
+          2h Swords: http://poe.trade/search/tototusimiteta
+          2h Axes: http://poe.trade/search/itahutominomar
+          1h Axes: http://poe.trade/search/ahuwororesikun
+          1h Maces: http://poe.trade/search/nokorinokomoku
+      
+         */
+
+         /* some mismatch between poemods and poe.trade on item types */
+         if (type == 'Helmets') type = 'Helmet';
+         if (type == 'BodyArmours') type = 'chest';
+         if (type == 'Shields') type = 'shield';
+         if (type == 'Daggers') type = 'dagger';
+         if (type == 'Rings') type = 'ring';
+         if (type == 'Belts') type = 'belt';
+         if (type == 'Amulets') type = 'amulet';
+         if (type == 'Bows') type = 'bow';
+         if (type == 'Wands') type = 'wand';
+         if (type == 'Scepters') type = 'scepter';
+         if (type == 'Claws') type = 'claw';
+         if (type == 'Staves') type = 'staff';
+         if (type == 'OneHandSwords') type = 'onehandswordaxe';
+         if (type == 'Rapiers') type = 'onehandswordaxe';
+         if (type == 'TwoHandSwords') type = 'twohandswordaxe';
+         if (type == 'OneHandAxes') type = 'onehandswordaxe';
+         if (type == 'TwoHandAxes') type = 'twohandswordaxe';
+         if (type == 'OneHandMaces') type = 'onehandmace';
+         if (type == 'TwoHandMaces') type = 'twohandmace';
+         if (type == 'Quivers') type = 'quiver';
+
+
+         // log(param_mod);
+         // log(param_type);
+
+         var affix_result = '?';
+         var tier_result = -1;
+         var affix_magic_name = null;
+
+         var mod_data = mods_data[type.toLowerCase()];
+         if (mod_data == null) return;
+
+         mod_data = mod_data[mod];
+
+         if (mod_data != null) {
+
+             affix_result = mod_data.affix;
+             for (i = 0; i < mod_data.tiers.length; i++) {
+                 var tier_value_raw = mod_data.tiers[i].tier_value
+
+                 var min_val = null;
+                 var max_val = null;
+
+                 /* http://stackoverflow.com/questions/447250/matching-exact-string-with-javascript */
+
+                 /* Range values like 30 to 39 */
+                 if (/^\d+\sto\s\d+$/.test(tier_value_raw)) {
+                     min_val = /(\d+)\sto\s\d+/.exec(tier_value_raw)[1];
+                     max_val = /\d+\sto\s(\d+)/.exec(tier_value_raw)[1];
+                 }
+
+                 /* Single values like 30 for movement speed on boots */
+                 if (/^\d+$/.test(tier_value_raw)) {
+                     min_val = tier_value_raw;
+                     max_val = tier_value_raw;
+                 }
+
+                 var min_avg = 0;
+                 var max_avg = 0;
+
+                 var min_low_val = 0;
+                 var min_high_val = 0;
+                 var max_low_val = 0;
+                 var max_high_val = 0;
+
+                 /* Double range values, mostly for flat damage mods, e.g.
+                    "1 / 2 to 3"
+                    "4 to 5 / 8 to 10"
+                  */
+
+                 /* solution below is a little bit duplicated, but i'm not a expert on regex sorry */
+
+                 /* "4 to 5 / 8 to 10" */
+                 if (/^\d+\sto\s\d+\s\/\s\d+\sto\s\d+$/.test(tier_value_raw)) {
+                     min_low_val = /^(\d+)\sto\s\d+?\s\/\s\d+\sto\s\d+$/.exec(tier_value_raw)[1];
+                     min_low_val = parseInt(min_low_val);
+                     min_high_val = /^\d+\sto\s(\d+)\s\/\s\d+\sto\s\d+$/.exec(tier_value_raw)[1];
+                     min_high_val = parseInt(min_high_val);
+                     max_low_val = /^\d+\sto\s\d+\s\/\s(\d+)\sto\s\d+$/.exec(tier_value_raw)[1];
+                     max_low_val = parseInt(max_low_val);
+                     max_high_val = /^\d+\sto\s\d+\s\/\s\d+\sto\s(\d+)$/.exec(tier_value_raw)[1];
+                     max_high_val = parseInt(max_high_val);
+                 }
+
+                 /* "1 / 2 to 3" */
+                 if (/^\d+\s\/\s\d+\sto\s\d+$/.test(tier_value_raw)) {
+                     min_low_val = /^(\d+)\s\/\s\d+\sto\s\d+$/.exec(tier_value_raw)[1];
+                     min_low_val = parseInt(min_low_val);
+                     max_low_val = /^\d+\s\/\s(\d+)\sto\s\d+$/.exec(tier_value_raw)[1];
+                     max_low_val = parseInt(max_low_val);
+                     max_high_val = /^\d+\s\/\s\d+\sto\s(\d+)$/.exec(tier_value_raw)[1];
+                     max_high_val = parseInt(max_high_val);
+                 }
+
+                 /* 1 / 2 */
+                 if (/^\d+\s\/\s\d+$/.test(tier_value_raw)) {
+                     min_val = /^(\d+)\s\/\s\d+$/.exec(tier_value_raw)[1];
+                     min_val = parseInt(min_val);
+                     max_val = /^\d+\s\/\s(\d+)$/.exec(tier_value_raw)[1];
+                     max_val = parseInt(max_val);
+                 }
+
+                 if (min_val != null && max_val != null) {
+
+                     min_val = min_val * 1.0;
+                     max_val = max_val * 1.0;
+                     if (min_val <= value && max_val >= value) {
+                         tier_result = mod_data.tiers[i].tier;
+                         affix_magic_name = mod_data.tiers[i].affix_magic_name;
+                     }
+
+                     log(tier_value_raw + "  --->   min: " + min_val + " max: " + max_val + ". Tier resolved to: " + tier_result);
+                 } else if (min_avg != null && max_avg != null) {
+
+                     /* note that poe.trade gives us the averaged flat value.
+                        e.g. for 20-35 Physical Damage
+                        the value is 27.5
+                     */
+
+                     min_avg = (min_low_val + max_low_val) / 2;
+                     max_avg = (min_high_val + max_high_val) / 2;
+
+                     if (value >= min_avg && value <= max_avg) {
+                         tier_result = mod_data.tiers[i].tier;
+                         affix_magic_name = mod_data.tiers[i].affix_magic_name;
+                     }
+
+                     log(tier_value_raw + "  --->   min: " + min_avg + " max: " + max_avg + ". Tier resolved to: " + tier_result);
+                 } else {
+                     log("Unhandled: " + tier_value_raw + "  --->   min: " + min_val + " max: " + max_val + ". Tier resolved to: " + tier_result);
+                 }
+
+                 if (tier_result != -1)
+                     break;
+             }
+         }
+
+         affix_callback(affix_result, tier_result, affix_magic_name);
+     }
+
+     function parseType(img_url, name) {
+         var matched = /BodyArmours|Boots|Helmets|Gloves|Belts|Rings|Amulets|Quivers|Bows|Wands|Scepters|Shields|Daggers|OneHandMaces|TwoHandMaces|OneHandSwords|TwoHandSwords|OneHandAxes|TwoHandAxes|Staves|Claws|Rapiers/.exec(img_url);
+         if (matched != null && matched.length == 1)
+             return matched[0];
+		
+         matched = /Flask/.exec(name);
+         if (matched != null && matched.length == 1)
+             return matched[0];
+         return null;
+     }
+
+     // Utility functions
+     function endsWith(str, suffix) {
+         return str.indexOf(suffix, str.length - suffix.length) !== -1;
+     }
+
+     function startWith(str, prefix) {
+         return str.lastIndexOf(prefix, 0) == 0;
+     }
+
+     function log(str) {
+         console.log(str);
+     }
   
-  
-  var mods_data = {
+function getModsData() {
+return {
     
     gloves:{
         "Adds #-# Cold Damage":{poemods:"Base Min Added Cold Dmg / Base Max Added Cold Dmg", subtype:"Armor", affix:"p", tiers:[
@@ -7664,317 +7963,4 @@
           },
     
 } /* mod_data closing curly */
-  
-  
-
-
-        /* Main code */
-        /*
-           Target all elements with class 'item', on poe.trade this is the <tbody> which represents one serach result item
-        */
-        var items = $('.item')
-
-        $.each(items, function() {
-          /* Parse Item Name */
-            var name = $(this).find('.item-cell > h5 > a').text().trim();
-          log(name);
-          
-          /* Parse image url */
-          var image_url = $(this).find('.icon-td > div > img').attr('src');
-          log(image_url);
-          
-          
-          var type = parseType(image_url, name);
-          log(type);
-          
-          
-          /* Parse Item Requirements */
-            var requirements_raw = $(this).find('.item-cell > .requirements').text();
-            
-            var requirement_raw;
-          
-          requirement_raw = /Level:\s(\d{1,2})/.exec(requirements_raw);
-            var lvl_req = requirement_raw != null && requirement_raw.length == 2 ? requirement_raw[1] : null;
-          
-          requirement_raw = /Strength:\s(\d{1,2})/.exec(requirements_raw);
-            var str_req = requirement_raw != null && requirement_raw.length == 2 ? requirement_raw[1] : null;
-          
-          requirement_raw = /Dexterity:\s(\d{1,2})/.exec(requirements_raw);
-            var dex_req = requirement_raw != null && requirement_raw.length == 2 ? requirement_raw[1] : null;
-            
-          requirement_raw = /Intelligence:\s(\d{1,2})/.exec(requirements_raw);
-            var int_req = requirement_raw != null && requirement_raw.length == 2 ? requirement_raw[1] : null;
-            
-          log('level req: ' + lvl_req);
-          log('strength req: ' + str_req);
-          log('dexterity req: ' + dex_req);
-          log('intelligence req: ' + int_req);
-          
-          /* Parse Mods */
-          var explicit_mods = $(this).find('.mods').not('.withline').children();
-          explicit_mods = $(explicit_mods).not('.pseudo');
-          
-          $.each(explicit_mods, function(){
-            
-              mod = $(this).attr('data-name');
-              value = $(this).attr('data-value');
-              
-              
-
-              /* we skip implicit mod here */
-              if (mod.lastIndexOf('$', 0) == 0) return;
-
-              /* remove the '#' as the first character
-              // For example, this mod from the search result:
-              // <li style="" data-value="0" data-name="#Your Spells have Culling Strike" class="sortable ">Your Spells have Culling Strike</li>
-              // Here we'll get "#Your Spells have Culling Strike" class="
-              // We wanna remove the first character there.
-              // I'm not sure why it has that while the mods listed in the explicit combobox (from the search form) doesn't have one.
-              */
-              if (mod.lastIndexOf('#', 0) == 0) mod = mod.substring(1);
-
-              /* remove the '@' as the last character
-              // this character is use to denote if the mod is a master-crafted mod
-               */
-              if (endsWith(mod, '@')) mod = mod.substring(0, mod.length - 1);
-            
-              log(mod + " with value: " + value);
-            
-              var mod_element = this;
-
-              /* poe.trade lists these mods like this:
-              // #% increased Flask Life Recovery rate
-              // #% increased Flask Life recovery rate
-              // so we'll go case-insensitive
-               */
-              getAffix(type, mod, lvl_req, str_req != null, dex_req != null, int_req != null, value, function(affix, tier, magic_name){
-                log('affix resolved to: ' + affix);
-                if (affix != null) {
-                    var tier_str = tier != -1 ? '[T' + tier + ']' : '';
-                    if (affix == 'p') {
-                      $(mod_element).prepend("<b style='color:#4584d3'>" + "<span style='display: none;'>[" + magic_name + "]</span>" + tier_str + '[prefix]' + '</b>&nbsp&nbsp');
-                       if(magic_name != null) bindMouseEnterAndLeaveEvent(mod_element);
-                    }
-                    if (affix == 's') {
-                      $(mod_element).prepend("<b style='color:#b60f2e'>" + "<span style='display: none;'>[" + magic_name + "]</span>" + tier_str + '[suffix]' + '</b>&nbsp&nbsp');
-                      if(magic_name != null) bindMouseEnterAndLeaveEvent(mod_element);
-                    }
-                }
-              });
-              
-              
-          });
-
-            
-        });
-    
-    function bindMouseEnterAndLeaveEvent(mod_elem) {
-          $(mod_elem)
-            .mouseenter(function() {
-              $( this ).find( "span" ).toggle();
-            })
-            .mouseleave(function() {
-              $( this ).find( "span" ).toggle();
-          });
-    }
-  
-    function getAffix(type, mod, lvl_req, is_str_req, is_dex_req, is_int_req, value, affix_callback) {
-      
-      //log(value);
-      var param_mod;
-		
-      /*
-       Test Data:
-       Gloves: http://poe.trade/search/ruziosahuomoko
-       Boots: http://poe.trade/search/hoteratootaber
-       Helmets: http://poe.trade/search/otenararininat
-       Chests: http://poe.trade/search/henotuitasihos
-       Shields: http://poe.trade/search/ahuichuwosakar
-       Daggers: http://poe.trade/search/aukakitimiatas
-       Amulets: http://poe.trade/search/habaukokubetas
-       Rings: http://poe.trade/search/onahusautenyao
-       Bows: http://poe.trade/search/kinikatetomasu
-       Wands: http://poe.trade/search/oononamturukon
-       Scepters: http://poe.trade/search/atetahomazuyun
-       Claws: http://poe.trade/search/awodonarigakin
-       Staff: poe.trade/search/inahesitamomom
-       1h Swords: http://poe.trade/search/terauganomomar
-       2h Swords: http://poe.trade/search/tototusimiteta
-       2h Axes: http://poe.trade/search/itahutominomar
-       1h Axes: http://poe.trade/search/ahuwororesikun
-       1h Maces: http://poe.trade/search/nokorinokomoku
-      
-      */
-      
-      /* some mismatch between poemods and poe.trade on item types */
-      if(type == 'Helmets') type = 'Helmet';
-      if(type == 'BodyArmours') type = 'chest';
-      if(type == 'Shields') type = 'shield';
-      if(type == 'Daggers') type = 'dagger';
-      if(type == 'Rings') type = 'ring';
-      if(type == 'Belts') type = 'belt';
-      if(type == 'Amulets') type = 'amulet';
-      if(type == 'Bows') type = 'bow';
-      if(type == 'Wands') type = 'wand';
-      if(type == 'Scepters') type = 'scepter';
-      if(type == 'Claws') type = 'claw';
-      if(type == 'Staves') type = 'staff';
-      if(type == 'OneHandSwords') type = 'onehandswordaxe';
-      if(type == 'Rapiers') type = 'onehandswordaxe';
-      if(type == 'TwoHandSwords') type = 'twohandswordaxe';
-      if(type == 'OneHandAxes') type = 'onehandswordaxe';
-      if(type == 'TwoHandAxes') type = 'twohandswordaxe';
-      if(type == 'OneHandMaces') type = 'onehandmace';
-      if(type == 'TwoHandMaces') type = 'twohandmace';
-      if(type == 'Quivers') type = 'quiver';
-      
-      
-     // log(param_mod);
-     // log(param_type);
-      
-      var affix_result = '?';
-      var tier_result = -1;
-      var affix_magic_name = null;
-      
-      var mod_data = mods_data[type.toLowerCase()];
-      if(mod_data == null) return;
-      
-      mod_data = mod_data[mod];
-      
-      if(mod_data != null) {
-        
-        affix_result = mod_data.affix;
-        for(i = 0; i < mod_data.tiers.length; i++) {
-          var tier_value_raw = mod_data.tiers[i].tier_value
-          
-          var min_val = null;
-          var max_val = null;
-          
-          /* http://stackoverflow.com/questions/447250/matching-exact-string-with-javascript */
-          
-          /* Range values like 30 to 39 */
-          if(/^\d+\sto\s\d+$/.test(tier_value_raw)) {
-            min_val = /(\d+)\sto\s\d+/.exec(tier_value_raw)[1];
-            max_val = /\d+\sto\s(\d+)/.exec(tier_value_raw)[1];
-          }
-          
-          /* Single values like 30 for movement speed on boots */
-          if(/^\d+$/.test(tier_value_raw)) {
-            min_val = tier_value_raw;
-            max_val = tier_value_raw;
-          }
-          
-          var min_avg      = 0;
-          var max_avg      = 0;
-          
-          var min_low_val = 0;
-          var min_high_val = 0;
-          var max_low_val  = 0;
-          var max_high_val = 0;
-          
-          /* Double range values, mostly for flat damage mods, e.g.
-             "1 / 2 to 3"
-             "4 to 5 / 8 to 10"
-           */
-          
-          /* solution below is a little bit duplicated, but i'm not a expert on regex sorry */
-          
-          /* "4 to 5 / 8 to 10" */
-          if (/^\d+\sto\s\d+\s\/\s\d+\sto\s\d+$/.test(tier_value_raw)) {
-            min_low_val  = /^(\d+)\sto\s\d+?\s\/\s\d+\sto\s\d+$/.exec(tier_value_raw)[1];
-            min_low_val  = parseInt(min_low_val);
-            min_high_val = /^\d+\sto\s(\d+)\s\/\s\d+\sto\s\d+$/.exec(tier_value_raw)[1];
-            min_high_val = parseInt(min_high_val);
-            max_low_val  = /^\d+\sto\s\d+\s\/\s(\d+)\sto\s\d+$/.exec(tier_value_raw)[1];
-            max_low_val  = parseInt(max_low_val);
-            max_high_val = /^\d+\sto\s\d+\s\/\s\d+\sto\s(\d+)$/.exec(tier_value_raw)[1];
-            max_high_val = parseInt(max_high_val);
-          }
-          
-          /* "1 / 2 to 3" */
-          if (/^\d+\s\/\s\d+\sto\s\d+$/.test(tier_value_raw)) {
-            min_low_val  = /^(\d+)\s\/\s\d+\sto\s\d+$/.exec(tier_value_raw)[1];
-            min_low_val  = parseInt(min_low_val);
-            max_low_val  = /^\d+\s\/\s(\d+)\sto\s\d+$/.exec(tier_value_raw)[1];
-            max_low_val  = parseInt(max_low_val);
-            max_high_val = /^\d+\s\/\s\d+\sto\s(\d+)$/.exec(tier_value_raw)[1];
-            max_high_val = parseInt(max_high_val);
-          }
-          
-          /* 1 / 2 */
-          if (/^\d+\s\/\s\d+$/.test(tier_value_raw)) {
-            min_val  = /^(\d+)\s\/\s\d+$/.exec(tier_value_raw)[1];
-            min_val  = parseInt(min_val);
-            max_val  = /^\d+\s\/\s(\d+)$/.exec(tier_value_raw)[1];
-            max_val  = parseInt(max_val);
-          }
-          
-          if(min_val != null && max_val != null) {
-            
-            min_val = min_val * 1.0;
-            max_val = max_val * 1.0;
-            if(min_val <= value && max_val >= value) {
-              tier_result = mod_data.tiers[i].tier;
-              affix_magic_name = mod_data.tiers[i].affix_magic_name;
-            }
-            
-            log(tier_value_raw + "  --->   min: " + min_val + " max: " + max_val + ". Tier resolved to: " + tier_result);
-          } else if(min_avg != null && max_avg != null){
-            
-            /* note that poe.trade gives us the averaged flat value.
-               e.g. for 20-35 Physical Damage
-               the value is 27.5
-            */
-
-            min_avg = (min_low_val + max_low_val) / 2;
-            max_avg = (min_high_val + max_high_val) / 2;
-            
-            if(value >= min_avg && value <= max_avg){
-              tier_result = mod_data.tiers[i].tier;
-              affix_magic_name = mod_data.tiers[i].affix_magic_name;
-            }
-            
-            log(tier_value_raw + "  --->   min: " + min_avg + " max: " + max_avg + ". Tier resolved to: " + tier_result);
-          } else {
-            log("Unhandled: " + tier_value_raw + "  --->   min: " + min_val + " max: " + max_val + ". Tier resolved to: " + tier_result);
-          }
-          
-          if(tier_result != -1)
-            break;
-        }
-      }
-      
-      affix_callback(affix_result, tier_result, affix_magic_name);
-    }
-  
-  function parseType(img_url, name) {
-    var matched = /BodyArmours|Boots|Helmets|Gloves|Belts|Rings|Amulets|Quivers|Bows|Wands|Scepters|Shields|Daggers|OneHandMaces|TwoHandMaces|OneHandSwords|TwoHandSwords|OneHandAxes|TwoHandAxes|Staves|Claws|Rapiers/.exec(img_url);
-    if(matched != null && matched.length == 1)
-      return matched[0];
-    
-    matched = /Flask/.exec(name);
-      if(matched != null && matched.length == 1)
-      return matched[0];
-    // disabled, well get a lot of alerts on uniques
-    //else
-    //  alert("Cannot determine item type based on img_url: " + img_url + ". Please post this bug on: www.pathofexile.com/forum/view-thread/1164052");
-    return null;
-  }
-
-    // Utility functions
-    function endsWith(str, suffix) {
-        return str.indexOf(suffix, str.length - suffix.length) !== -1;
-    }
-
-    function startWith(str, prefix) {
-        return str.lastIndexOf(prefix, 0) == 0;
-    }
-  
-  function log(str){
-    console.log(str);
-  }
-  
-       
-  
-
-})();
+}
