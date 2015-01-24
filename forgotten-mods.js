@@ -25,7 +25,8 @@
           1h Maces: http://poe.trade/search/nokorinokomoku
       
 */
-   var mods_data = getModsData()
+
+     var mods_data = getModsData()
 	 var list_of_uniques = getListOfUniques()
 	 
 	 /* Target all elements with class 'item', on poe.trade this is the <tbody> which represents one serach result item */
@@ -48,7 +49,7 @@
 
 
          /* Parse Item Requirements */
-         var requirements_raw = $(this).find('.item-cell > .requirements').text();
+         /*var requirements_raw = $(this).find('.item-cell > .requirements').text();
 
          var requirement_raw;
 
@@ -67,19 +68,23 @@
          log('level req: ' + lvl_req);
          log('strength req: ' + str_req);
          log('dexterity req: ' + dex_req);
-         log('intelligence req: ' + int_req);
+         log('intelligence req: ' + int_req);*/
 
          /* Parse Mods */
          var explicit_mods = $(this).find('.mods').not('.withline').children();
          explicit_mods = $(explicit_mods).not('.pseudo');
+		 
+		 var affixes = [];
+		 var prefix_ctr = 0;
+		 var suffix_ctr = 0;
+		 var accuracy_mod = null;
+		 var light_radius_mod = null;
 
+		 /* first pass, here we only resolve simple affixes */
          $.each(explicit_mods, function() {
-
              mod = $(this).attr('data-name');
              value = $(this).attr('data-value');
-
-
-
+			 
              /* we skip implicit mod here */
              if (mod.lastIndexOf('$', 0) == 0) return;
 
@@ -101,25 +106,86 @@
 
              var mod_element = this;
 
-             /* poe.trade lists these mods like this:
-             // #% increased Flask Life Recovery rate
-             // #% increased Flask Life recovery rate
-             // so we'll go case-insensitive
-              */
-             getAffix(type, mod, lvl_req, str_req != null, dex_req != null, int_req != null, value, function(affix, tier, magic_name) {
+             getAffix(type, mod, value, function(affix, tier, magic_name) {
                  log('affix resolved to: ' + affix);
-                 if (affix != null) {
-                     var tier_str = tier != -1 ? '[T' + tier + ']' : '';
-                     if (affix == 'p') {
-                         $(mod_element).prepend("<b style='color:#4584d3'>" + "<span style='display: none;'>[" + magic_name + "]</span>" + tier_str + '[prefix]' + '</b>&nbsp&nbsp');
-                         if (magic_name != null) bindMouseEnterAndLeaveEvent(mod_element);
-                     }
-                     if (affix == 's') {
-                         $(mod_element).prepend("<b style='color:#b60f2e'>" + "<span style='display: none;'>[" + magic_name + "]</span>" + tier_str + '[suffix]' + '</b>&nbsp&nbsp');
-                         if (magic_name != null) bindMouseEnterAndLeaveEvent(mod_element);
-                     }
-                 }
+				 if(affix == 'p') prefix_ctr++;
+				 if(affix == 's') suffix_ctr++;
+				 var mod_obj = {mod:mod, value:value, affix:affix, tier:tier, magic_name:magic_name, mod_element:mod_element};
+				 if(mod == '+# to Accuracy Rating') accuracy_mod = mod_obj;
+				 if(mod == '#% increased Light Radius') light_radius_mod = mod_obj;
+                 affixes.push(mod_obj)
              });
+         });
+		 
+		 /* second pass, here we only resolve complex affixes */
+		 $.each(affixes, function() {
+			 affix_obj = this;
+			 if(this.mod == "#% increased Physical Damage"){
+				 /*
+					 Pseudocode for determining "% increased Physical Damage" mod
+					 if Accuracy mod is not present, then mod is prefix
+					 
+					 // Below are cases where Accuracy mod is present 
+					 if 2 other prefixes are present, then mod is prefix (accuracy mod is a suffix)
+					 
+					 if phys value is within range of the hybrid accuracy/phys range, then phys is just a hybrid
+					 
+					 if 3 other non "Accuracy" non "Light radius" suffixes are present, then mod is hybrid phys/accu" or combined (pure + hybrid phys/accu)
+						let min_hybrid_phys_value = the min phys value for the tier of the given accu
+						get the difference of 'given phys mod value' and min_hybrid_phys_value
+							if difference is 0, then mod is a hybrid, in this case we are sure about the tier level
+							else mod is combined (pure + hybrid phys/accu), in this case we can't accurately tell that tier levels
+
+					 if Light Radius mod is present and two other suffixes are present,
+					   // in this case we are sure that pure accuracy suffix is not possible
+					   let light_radius_accu_value = corresponding accuracy value of the given Light radius
+					   prefix_accu = given "accuracy mod value" - light_radius_accu_value
+					   if prefix_accu is 0, the mod is pure phys
+					   if prefix_accu > 0
+							do logic for determining hybrid phys/accu" or combined (pure + hybrid phys/accu)
+					 
+				 */
+				 if(accuracy_mod != null) {
+					 /* first two steps are already covered in simple affixes */
+					 
+					 tierObj = getHybridPhysRangeGivenAccuracyValue(accuracy_mod.value);
+					 
+					 min_hybrid_phys_value = tierObj.min_low_val;
+					 max_hybrid_phys_value = tierObj.min_high_val;
+					 log(min_hybrid_phys_value + '======' + max_hybrid_phys_value + ' ===== ' + this.value)
+					 
+					 if(min_hybrid_phys_value <= parseInt(this.value)
+							&& parseInt(this.value) <= max_hybrid_phys_value){
+								tier_data = tierObj['tier_data'];
+								affix_obj['tier'] = tier_data.tier;
+								affix_obj.affix = 'cp';
+								affix_obj['magic_name'] = tier_data.affix_magic_name;
+								accuracy_mod.tier = tier_data.tier;
+								accuracy_mod.magic_name = tier_data.affix_magic_name;
+								accuracy_mod.affix = 'cp';
+							}
+					 
+					 //if(light_radius_mod == null && suffix_ctr == 4) {
+						 
+						 
+						 //phys_value_diff = this.value - min_hybrid_phys_value
+					 //}
+					}
+			}
+		 });
+		 
+		 $.each(affixes, function() {
+					 $(this.mod_element).find('b.forgottenmods').remove();
+                     var tier_str = this.tier != -1 ? '[T' + this.tier + ']' : '';
+					 if (this.affix == 'p' || this.affix == 'cp') {
+						 affix_str_final = this.affix == 'p' ? '[prefix]' : '[c-prefix]';
+                         $(this.mod_element).prepend("<b class='forgottenmods' style='color:#4584d3'>" + "<span style='display: none;'>[" + this.magic_name + "]</span>" + tier_str + affix_str_final + '&nbsp&nbsp</b>');
+                         if (this.magic_name != null) bindMouseEnterAndLeaveEvent(this.mod_element);
+                     }
+                     if (this.affix == 's') {
+                         $(this.mod_element).prepend("<b class='forgottenmods' style='color:#b60f2e'>" + "<span style='display: none;'>[" + this.magic_name + "]</span>" + tier_str + '[suffix]' + '&nbsp&nbsp</b>');
+                         if (this.magic_name != null) bindMouseEnterAndLeaveEvent(this.mod_element);
+                     }
          });
      });
 
@@ -132,12 +198,41 @@
                  $(this).find("span").toggle();
              });
      }
+	 
+	 function getHybridPhysRangeGivenAccuracyValue(accuracy_value) {
+		 tierObj = null;
+		 log("determine accu: " + accuracy_value)
+		 var hybrid_phys_accu_data = [
+			{tier:7, ilvl:1, tier_value:"10 to 24 / 3 to 7", affix_magic_name:"Squire's"},
+			{tier:6, ilvl:11, tier_value:"25 to 34 / 8 to 30", affix_magic_name:"Journeyman's"},
+			{tier:5, ilvl:23, tier_value:"35 to 44 / 31 to 50", affix_magic_name:"Reaver's"},
+			{tier:4, ilvl:35, tier_value:"45 to 54 / 51 to 64", affix_magic_name:"Mercenary's"},
+			{tier:3, ilvl:46, tier_value:"55 to 64 / 65 to 82", affix_magic_name:"Champion's"},
+			{tier:2, ilvl:60, tier_value:"65 to 74 / 83 to 99", affix_magic_name:"Conqueror's"},
+			{tier:1, ilvl:73, tier_value:"75 to 80 / 100 to 135", affix_magic_name:"Emperor's"},
+		];
+		
+		for(i in hybrid_phys_accu_data) {
+			obj = parseTierRawValue(hybrid_phys_accu_data[i].tier_value)
+			/* Note that tier parser thought the tier raw was like those flat dmg values */
+			low  = parseInt(obj.max_low_val)
+			high = parseInt(obj.max_high_val)
+			acc = parseInt(accuracy_value)
+			log(low + "----" + high + ' ----' + parseInt(accuracy_value))
+			if(low <= acc && acc <= high) {
+				tierObj = obj;
+				tierObj['tier_data'] = hybrid_phys_accu_data[i];
+				log("resolved to : " + tierObj['tier_data'].affix_magic_name)
+				break;
+			}
+		}
+		return tierObj;
+	 }
 
-     function getAffix(type, mod, lvl_req, is_str_req, is_dex_req, is_int_req, value, affix_callback) {
-
+     function getAffix(type, mod, value, affix_callback) {
          //log(value);
          var param_mod;
-
+		 
          /* some mismatch between poemods and poe.trade on item types */
          if (type == 'Helmets') type = 'Helmet';
          if (type == 'BodyArmours') type = 'chest';
@@ -159,8 +254,7 @@
          if (type == 'OneHandMaces') type = 'onehandmace';
          if (type == 'TwoHandMaces') type = 'twohandmace';
          if (type == 'Quivers') type = 'quiver';
-
-
+		 
          // log(param_mod);
          // log(param_type);
 
@@ -179,10 +273,66 @@
              for (i = 0; i < mod_data.tiers.length; i++) {
                  var tier_value_raw = mod_data.tiers[i].tier_value
 
-                 var min_val = null;
-                 var max_val = null;
+				 tier_obj = parseTierRawValue(tier_value_raw);
+				 
+				 var min_val = tier_obj.min_val;
+                 var max_val = tier_obj.max_val;
+				 var min_avg = tier_obj.min_avg;
+                 var max_avg = tier_obj.max_avg;
+                 var min_low_val = tier_obj.min_low_val;
+                 var min_high_val = tier_obj.min_high_val;
+                 var max_low_val = tier_obj.max_low_val;
+                 var max_high_val = tier_obj.max_high_val;
 
-                 /* http://stackoverflow.com/questions/447250/matching-exact-string-with-javascript */
+                 if (min_val != null && max_val != null) {
+
+                     min_val = min_val * 1.0;
+                     max_val = max_val * 1.0;
+                     if (min_val <= value && max_val >= value) {
+                         tier_result = mod_data.tiers[i].tier;
+                         affix_magic_name = mod_data.tiers[i].affix_magic_name;
+                     }
+
+                     log(tier_value_raw + "  --->   min: " + min_val + " max: " + max_val + ". Tier resolved to: " + tier_result);
+                 } else if (min_avg != null && max_avg != null) {
+
+                     /* note that poe.trade gives us the averaged flat value.
+                        e.g. for 20-35 Physical Damage
+                        the value is 27.5
+                     */
+
+                     min_avg = (min_low_val + max_low_val) / 2;
+                     max_avg = (min_high_val + max_high_val) / 2;
+
+                     if (value >= min_avg && value <= max_avg) {
+                         tier_result = mod_data.tiers[i].tier;
+                         affix_magic_name = mod_data.tiers[i].affix_magic_name;
+                     }
+
+                     log(tier_value_raw + "  --->   min: " + min_avg + " max: " + max_avg + ". Tier resolved to: " + tier_result);
+                 } else {
+                     log("Unhandled: " + tier_value_raw + "  --->   min: " + min_val + " max: " + max_val + ". Tier resolved to: " + tier_result);
+                 }
+                 if (tier_result != -1)
+                     break;
+             }
+         }
+         affix_callback(affix_result, tier_result, affix_magic_name);
+     }
+	 
+	 function parseTierRawValue(tier_value_raw) {
+		         var min_val = null;
+                 var max_val = null;
+				 
+				 var min_avg = 0;
+                 var max_avg = 0;
+
+                 var min_low_val = 0;
+                 var min_high_val = 0;
+                 var max_low_val = 0;
+                 var max_high_val = 0;
+				 
+				/* http://stackoverflow.com/questions/447250/matching-exact-string-with-javascript */
 
                  /* Range values like 30 to 39 */
                  if (/^\d+\sto\s\d+$/.test(tier_value_raw)) {
@@ -195,14 +345,6 @@
                      min_val = tier_value_raw;
                      max_val = tier_value_raw;
                  }
-
-                 var min_avg = 0;
-                 var max_avg = 0;
-
-                 var min_low_val = 0;
-                 var min_high_val = 0;
-                 var max_low_val = 0;
-                 var max_high_val = 0;
 
                  /* Double range values, mostly for flat damage mods, e.g.
                     "1 / 2 to 3"
@@ -239,44 +381,9 @@
                      min_val = parseInt(min_val);
                      max_val = /^\d+\s\/\s(\d+)$/.exec(tier_value_raw)[1];
                      max_val = parseInt(max_val);
-                 }
-
-                 if (min_val != null && max_val != null) {
-
-                     min_val = min_val * 1.0;
-                     max_val = max_val * 1.0;
-                     if (min_val <= value && max_val >= value) {
-                         tier_result = mod_data.tiers[i].tier;
-                         affix_magic_name = mod_data.tiers[i].affix_magic_name;
-                     }
-
-                     log(tier_value_raw + "  --->   min: " + min_val + " max: " + max_val + ". Tier resolved to: " + tier_result);
-                 } else if (min_avg != null && max_avg != null) {
-
-                     /* note that poe.trade gives us the averaged flat value.
-                        e.g. for 20-35 Physical Damage
-                        the value is 27.5
-                     */
-
-                     min_avg = (min_low_val + max_low_val) / 2;
-                     max_avg = (min_high_val + max_high_val) / 2;
-
-                     if (value >= min_avg && value <= max_avg) {
-                         tier_result = mod_data.tiers[i].tier;
-                         affix_magic_name = mod_data.tiers[i].affix_magic_name;
-                     }
-
-                     log(tier_value_raw + "  --->   min: " + min_avg + " max: " + max_avg + ". Tier resolved to: " + tier_result);
-                 } else {
-                     log("Unhandled: " + tier_value_raw + "  --->   min: " + min_val + " max: " + max_val + ". Tier resolved to: " + tier_result);
-                 }
-
-                 if (tier_result != -1)
-                     break;
-             }
-         }
-         affix_callback(affix_result, tier_result, affix_magic_name);
-     }
+                 }				 
+				 return {min_val,max_val,min_avg,max_avg,max_avg,min_low_val,min_high_val,max_low_val,max_high_val};
+	 }
 
      function parseType(img_url, name) {
          var matched = /BodyArmours|Boots|Helmets|Gloves|Belts|Rings|Amulets|Quivers|Bows|Wands|Scepters|Shields|Daggers|OneHandMaces|TwoHandMaces|OneHandSwords|TwoHandSwords|OneHandAxes|TwoHandAxes|Staves|Claws|Rapiers/.exec(img_url);
