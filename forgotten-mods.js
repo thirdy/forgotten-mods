@@ -111,7 +111,7 @@
 				 if(affix == 'p') prefix_ctr++;
 				 if(affix == 's') suffix_ctr++;
 				 var mod_obj = {mod:mod, value:value, affix:affix, tier:tier, magic_name:magic_name, mod_element:mod_element};
-				 if(mod == '+# to Accuracy Rating') accuracy_mod = mod_obj;
+				 if(mod == '+# to Accuracy Rating') 	accuracy_mod 	 = mod_obj;
 				 if(mod == '#% increased Light Radius') light_radius_mod = mod_obj;
                  affixes.push(mod_obj)
              });
@@ -119,8 +119,8 @@
 		 
 		 /* second pass, here we only resolve complex affixes */
 		 $.each(affixes, function() {
-			 affix_obj = this;
 			 if(this.mod == "#% increased Physical Damage"){
+				 phys_mod = this;
 				 /*
 					 Pseudocode for determining "% increased Physical Damage" mod
 					 if Accuracy mod is not present, then mod is prefix
@@ -131,9 +131,7 @@
 					 if phys value is within range of the hybrid accuracy/phys range, then phys is just a hybrid
 					 
 					 if 3 other non "Accuracy" non "Light radius" suffixes are present, then mod is hybrid phys/accu" or combined (pure + hybrid phys/accu)
-						let min_hybrid_phys_value = the min phys value for the tier of the given accu
-						get the difference of 'given phys mod value' and min_hybrid_phys_value
-							if difference is 0, then mod is a hybrid, in this case we are sure about the tier level
+							if the given phys value is within the phys/accuracy tier, then mod is just 1 hybrid, in this case we are sure about the tier level
 							else mod is combined (pure + hybrid phys/accu), in this case we can't accurately tell that tier levels
 
 					 if Light Radius mod is present and two other suffixes are present,
@@ -146,24 +144,33 @@
 					 
 				 */
 				 if(accuracy_mod != null) {
-					 /* first two steps are already covered in simple affixes */
+					 /* first two steps are already covered in simple affixes */	
 					 
-					 tierObj = getHybridPhysRangeGivenAccuracyValue(accuracy_mod.value);
+					 log(suffix_ctr)
+					 log(light_radius_mod)
 					 
-					 min_hybrid_phys_value = tierObj.min_low_val;
-					 max_hybrid_phys_value = tierObj.min_high_val;
-					 log(min_hybrid_phys_value + '======' + max_hybrid_phys_value + ' ===== ' + this.value)
-					 
-					 if(min_hybrid_phys_value <= parseInt(this.value)
-							&& parseInt(this.value) <= max_hybrid_phys_value){
-								tier_data = tierObj['tier_data'];
-								affix_obj['tier'] = tier_data.tier;
-								affix_obj.affix = 'cp';
-								affix_obj['magic_name'] = tier_data.affix_magic_name;
-								accuracy_mod.tier = tier_data.tier;
+					 if(suffix_ctr == 4 && light_radius_mod == null) {
+						 tierObj = getHybridPhysRangeGivenAccuracyValue(accuracy_mod.value);
+						 min_hybrid_phys_value = tierObj.min_low_val;
+						 max_hybrid_phys_value = tierObj.min_high_val;
+						 tier_data 			   = tierObj['tier_data'];
+						 if(  min_hybrid_phys_value <= parseInt(this.value)
+						   && parseInt(this.value)  <= max_hybrid_phys_value){
+								phys_mod['tier'] 		= tier_data.tier;
+								phys_mod.affix 			= 'p';
+								phys_mod['magic_name'] 	= tier_data.affix_magic_name;
+								accuracy_mod.tier 		= tier_data.tier;
 								accuracy_mod.magic_name = tier_data.affix_magic_name;
-								accuracy_mod.affix = 'cp';
-							}
+								accuracy_mod.affix 		= 'p';
+						  } else {
+								phys_mod['tier'] 		= '?';
+								phys_mod.affix 			= 'pp';
+								phys_mod['magic_name'] 	= tier_data.affix_magic_name;
+								accuracy_mod.tier 		= tier_data.tier;
+								accuracy_mod.magic_name = tier_data.affix_magic_name;
+								accuracy_mod.affix 		= 'p';
+						  }
+					 }
 					 
 					 //if(light_radius_mod == null && suffix_ctr == 4) {
 						 
@@ -178,7 +185,7 @@
 					 $(this.mod_element).find('b.forgottenmods').remove();
                      var tier_str = this.tier != -1 ? '[T' + this.tier + ']' : '';
 					 if (this.affix == 'p' || this.affix == 'cp') {
-						 affix_str_final = this.affix == 'p' ? '[prefix]' : '[c-prefix]';
+						 affix_str_final = this.affix == 'pp' ? '[prefix x 2]' : '[prefix]';
                          $(this.mod_element).prepend("<b class='forgottenmods' style='color:#4584d3'>" + "<span style='display: none;'>[" + this.magic_name + "]</span>" + tier_str + affix_str_final + '&nbsp&nbsp</b>');
                          if (this.magic_name != null) bindMouseEnterAndLeaveEvent(this.mod_element);
                      }
