@@ -143,6 +143,13 @@
 							do logic for determining hybrid phys/accu" or combined (pure + hybrid phys/accu)
 					 
 				 */
+         
+         /*
+          Test cases:
+          1. 3 other suffix, 1 other prefix, 1 hybrid phys/accu http://poe.trade/search/hazukahotahusu
+          2. 2 other suffix, 2 other prefix, cannot be sure if pure phys or hybrid http://poe.trade/search/amimatoranokit
+         */
+         
 				 if(accuracy_mod != null) {
 					 /* first two steps are already covered in simple affixes */	
 					 
@@ -157,11 +164,11 @@
 						 if(  min_hybrid_phys_value <= parseInt(this.value)
 						   && parseInt(this.value)  <= max_hybrid_phys_value){
 								phys_mod['tier'] 		= tier_data.tier;
-								phys_mod.affix 			= 'p';
+								phys_mod.affix 			= 'ph';
 								phys_mod['magic_name'] 	= tier_data.affix_magic_name;
 								accuracy_mod.tier 		= tier_data.tier;
 								accuracy_mod.magic_name = tier_data.affix_magic_name;
-								accuracy_mod.affix 		= 'p';
+								accuracy_mod.affix 		= 'ph';
 						  } else {
 								phys_mod['tier'] 		= '?';
 								phys_mod.affix 			= 'pp';
@@ -170,22 +177,28 @@
 								accuracy_mod.magic_name = tier_data.affix_magic_name;
 								accuracy_mod.affix 		= 'p';
 						  }
-					 }
-					 
-					 //if(light_radius_mod == null && suffix_ctr == 4) {
-						 
-						 
-						 //phys_value_diff = this.value - min_hybrid_phys_value
-					 //}
-					}
+           } else {
+                /* flag as unknown for now */
+                phys_mod['tier'] 		= '?';
+								phys_mod.affix 			= 'p?h';
+								phys_mod['magic_name'] 	= '?';
+								accuracy_mod.tier 		= '?';
+								accuracy_mod.magic_name = '?';
+								accuracy_mod.affix 		= 'p?s';
+           }
+				}
 			}
 		 });
 		 
 		 $.each(affixes, function() {
 					 $(this.mod_element).find('b.forgottenmods').remove();
                      var tier_str = this.tier != -1 ? '[T' + this.tier + ']' : '';
-					 if (this.affix == 'p' || this.affix == 'cp') {
-						 affix_str_final = this.affix == 'pp' ? '[prefix x 2]' : '[prefix]';
+					          if (this.affix.charAt(0) == 'p') {
+                         affix_str_final = this.affix == 'pp' ? '[prefix x 2]' 
+                           : this.affix == 'ph' ? '[prefix-hybrid]' 
+                           : this.affix == 'p?h' ? '[?]' 
+                           : this.affix == 'p?s' ? '[?]' 
+                           : '[prefix]';
                          $(this.mod_element).prepend("<b class='forgottenmods' style='color:#4584d3'>" + "<span style='display: none;'>[" + this.magic_name + "]</span>" + tier_str + affix_str_final + '&nbsp&nbsp</b>');
                          if (this.magic_name != null) bindMouseEnterAndLeaveEvent(this.mod_element);
                      }
@@ -281,6 +294,7 @@
                  var tier_value_raw = mod_data.tiers[i].tier_value
 
 				 tier_obj = parseTierRawValue(tier_value_raw);
+               
 				 
 				 var min_val = tier_obj.min_val;
                  var max_val = tier_obj.max_val;
@@ -300,7 +314,7 @@
                          affix_magic_name = mod_data.tiers[i].affix_magic_name;
                      }
 
-                     log(tier_value_raw + "  --->   min: " + min_val + " max: " + max_val + ". Tier resolved to: " + tier_result);
+                   log("single range: " + tier_value_raw + "  --->   min: " + min_val + " max: " + max_val + ". Tier resolved to: " + tier_result);
                  } else if (min_avg != null && max_avg != null) {
 
                      /* note that poe.trade gives us the averaged flat value.
@@ -310,13 +324,15 @@
 
                      min_avg = (min_low_val + max_low_val) / 2;
                      max_avg = (min_high_val + max_high_val) / 2;
+                   
+                     if(min_high_val == 0) max_avg = max_high_val;
 
                      if (value >= min_avg && value <= max_avg) {
                          tier_result = mod_data.tiers[i].tier;
                          affix_magic_name = mod_data.tiers[i].affix_magic_name;
                      }
 
-                     log(tier_value_raw + "  --->   min: " + min_avg + " max: " + max_avg + ". Tier resolved to: " + tier_result);
+                   log("averaged: " + tier_value_raw + "  --->   min: " + min_avg + " max: " + max_avg + ". Tier resolved to: " + tier_result);
                  } else {
                      log("Unhandled: " + tier_value_raw + "  --->   min: " + min_val + " max: " + max_val + ". Tier resolved to: " + tier_result);
                  }
@@ -389,7 +405,9 @@
                      max_val = /^\d+\s\/\s(\d+)$/.exec(tier_value_raw)[1];
                      max_val = parseInt(max_val);
                  }				 
-				 return {min_val,max_val,min_avg,max_avg,max_avg,min_low_val,min_high_val,max_low_val,max_high_val};
+
+     /* Note that the short-hand version of obj creation might not work with other browser versions. So we use the long hand here. */
+     return {min_val:min_val,max_val:max_val,min_avg:min_avg,max_avg:max_avg,max_avg:max_avg,min_low_val:min_low_val,min_high_val:min_high_val,max_low_val:max_low_val,max_high_val:max_high_val};
 	 }
 
      function parseType(img_url, name) {
@@ -536,7 +554,7 @@ return {
         {tier:2, ilvl:3, tier_value:"6 to 10", affix_magic_name:"of Plunder"},
         {tier:1, ilvl:30, tier_value:"11 to 14", affix_magic_name:"of Raiding"},
         ]},
-        "+# Life gained for each Ignited Enemy hit by your Attacks":{poemods:"Life Gain Per Target", subtype:"Armor", affix:"s", tiers:[
+        "+# Life gained for each Enemy hit by your Attacks":{poemods:"Life Gain Per Target", subtype:"Armor", affix:"s", tiers:[
         {tier:1, ilvl:8, tier_value:"2", affix_magic_name:"of Rejuvenation"},
         ]},
         "+# Life gained on Kill":{poemods:"Life Gained On Enemy Death", subtype:"Armor", affix:"s", tiers:[
@@ -709,7 +727,7 @@ return {
         {tier:2, ilvl:3, tier_value:"6 to 10", affix_magic_name:"of Plunder"},
         {tier:1, ilvl:30, tier_value:"11 to 14", affix_magic_name:"of Raiding"},
         ]},
-        "+# Life gained for each Ignited Enemy hit by your Attacks":{poemods:"Life Gain Per Target", subtype:"Evasion", affix:"s", tiers:[
+        "+# Life gained for each Enemy hit by your Attacks":{poemods:"Life Gain Per Target", subtype:"Evasion", affix:"s", tiers:[
         {tier:1, ilvl:8, tier_value:"2", affix_magic_name:"of Rejuvenation"},
         ]},
         "+# Life gained on Kill":{poemods:"Life Gained On Enemy Death", subtype:"Evasion", affix:"s", tiers:[
@@ -909,7 +927,7 @@ return {
         {tier:2, ilvl:3, tier_value:"6 to 10", affix_magic_name:"of Plunder"},
         {tier:1, ilvl:30, tier_value:"11 to 14", affix_magic_name:"of Raiding"},
         ]},
-        "+# Life gained for each Ignited Enemy hit by your Attacks":{poemods:"Life Gain Per Target", subtype:"Energy Shield", affix:"s", tiers:[
+        "+# Life gained for each Enemy hit by your Attacks":{poemods:"Life Gain Per Target", subtype:"Energy Shield", affix:"s", tiers:[
         {tier:1, ilvl:8, tier_value:"2", affix_magic_name:"of Rejuvenation"},
         ]},
         "+# Life gained on Kill":{poemods:"Life Gained On Enemy Death", subtype:"Energy Shield", affix:"s", tiers:[
@@ -1312,7 +1330,7 @@ return {
         {tier:2, ilvl:3, tier_value:"6 to 10", affix_magic_name:"of Plunder"},
         {tier:1, ilvl:30, tier_value:"11 to 14", affix_magic_name:"of Raiding"},
         ]},
-        "+# Life gained for each Ignited Enemy hit by your Attacks":{poemods:"Life Gain Per Target", subtype:"Armor / Energy Shield", affix:"s", tiers:[
+        "+# Life gained for each Enemy hit by your Attacks":{poemods:"Life Gain Per Target", subtype:"Armor / Energy Shield", affix:"s", tiers:[
         {tier:1, ilvl:8, tier_value:"2", affix_magic_name:"of Rejuvenation"},
         ]},
         "+# Life gained on Kill":{poemods:"Life Gained On Enemy Death", subtype:"Armor / Energy Shield", affix:"s", tiers:[
@@ -1517,7 +1535,7 @@ return {
         {tier:2, ilvl:3, tier_value:"6 to 10", affix_magic_name:"of Plunder"},
         {tier:1, ilvl:30, tier_value:"11 to 14", affix_magic_name:"of Raiding"},
         ]},
-        "+# Life gained for each Ignited Enemy hit by your Attacks":{poemods:"Life Gain Per Target", subtype:"Evasion / Energy Shield", affix:"s", tiers:[
+        "+# Life gained for each Enemy hit by your Attacks":{poemods:"Life Gain Per Target", subtype:"Evasion / Energy Shield", affix:"s", tiers:[
         {tier:1, ilvl:8, tier_value:"2", affix_magic_name:"of Rejuvenation"},
         ]},
         "+# Life gained on Kill":{poemods:"Life Gained On Enemy Death", subtype:"Evasion / Energy Shield", affix:"s", tiers:[
@@ -5118,7 +5136,7 @@ return {
           {tier:2, ilvl:59, tier_value:"80 to 99", affix_magic_name:"of Ruin"},
           {tier:1, ilvl:76, tier_value:"100 to 109", affix_magic_name:"of Unmaking"},
           ]},
-          "+# Life gained for each Ignited Enemy hit by your Attacks":{poemods:"Life Gain Per Target", subtype:null, affix:"s", tiers:[
+          "+# Life gained for each Enemy hit by your Attacks":{poemods:"Life Gain Per Target", subtype:null, affix:"s", tiers:[
           {tier:4, ilvl:8, tier_value:"2", affix_magic_name:"of Rejuvenation"},
           {tier:3, ilvl:20, tier_value:"3", affix_magic_name:"of Restoration"},
           {tier:2, ilvl:30, tier_value:"4", affix_magic_name:"of Regrowth"},
@@ -5367,7 +5385,7 @@ return {
           {tier:2, ilvl:55, tier_value:"13 to 16", affix_magic_name:"of Hoarding"},
           {tier:1, ilvl:77, tier_value:"17 to 20", affix_magic_name:"of Amassment"},
           ]},
-          "+# Life gained for each Ignited Enemy hit by your Attacks":{poemods:"Life Gain Per Target", subtype:null, affix:"s", tiers:[
+          "+# Life gained for each Enemy hit by your Attacks":{poemods:"Life Gain Per Target", subtype:null, affix:"s", tiers:[
           {tier:1, ilvl:8, tier_value:"2", affix_magic_name:"of Rejuvenation"},
           ]},
           "+# Life gained on Kill":{poemods:"Life Gained On Enemy Death", subtype:null, affix:"s", tiers:[
@@ -5667,7 +5685,7 @@ return {
           {tier:2, ilvl:55, tier_value:"13 to 16", affix_magic_name:"of Hoarding"},
           {tier:1, ilvl:77, tier_value:"17 to 20", affix_magic_name:"of Amassment"},
           ]},
-          "+# Life gained for each Ignited Enemy hit by your Attacks":{poemods:"Life Gain Per Target", subtype:null, affix:"s", tiers:[
+          "+# Life gained for each Enemy hit by your Attacks":{poemods:"Life Gain Per Target", subtype:null, affix:"s", tiers:[
           {tier:3, ilvl:8, tier_value:"2", affix_magic_name:"of Rejuvenation"},
           {tier:2, ilvl:20, tier_value:"3", affix_magic_name:"of Restoration"},
           {tier:1, ilvl:30, tier_value:"4", affix_magic_name:"of Regrowth"},
@@ -5867,7 +5885,7 @@ return {
           {tier:2, ilvl:59, tier_value:"30 to 34", affix_magic_name:"of Penetrating"},
           {tier:1, ilvl:73, tier_value:"35 to 38", affix_magic_name:"of Incision"},
           ]},
-          "+# Life gained for each Ignited Enemy hit by your Attacks":{poemods:"Life Gain Per Target", subtype:null, affix:"s", tiers:[
+          "+# Life gained for each Enemy hit by your Attacks":{poemods:"Life Gain Per Target", subtype:null, affix:"s", tiers:[
           {tier:4, ilvl:8, tier_value:"2", affix_magic_name:"of Rejuvenation"},
           {tier:3, ilvl:20, tier_value:"3", affix_magic_name:"of Restoration"},
           {tier:2, ilvl:30, tier_value:"4", affix_magic_name:"of Regrowth"},
@@ -6126,7 +6144,7 @@ return {
           {tier:2, ilvl:64, tier_value:"23 to 26", affix_magic_name:"of Discharge"},
           {tier:1, ilvl:76, tier_value:"27 to 30", affix_magic_name:"of Arcing"},
           ]},
-          "+# Life gained for each Ignited Enemy hit by your Attacks":{poemods:"Life Gain Per Target", subtype:null, affix:"s", tiers:[
+          "+# Life gained for each Enemy hit by your Attacks":{poemods:"Life Gain Per Target", subtype:null, affix:"s", tiers:[
           {tier:4, ilvl:8, tier_value:"2", affix_magic_name:"of Rejuvenation"},
           {tier:3, ilvl:20, tier_value:"3", affix_magic_name:"of Restoration"},
           {tier:2, ilvl:30, tier_value:"4", affix_magic_name:"of Regrowth"},
@@ -6407,7 +6425,7 @@ return {
           {tier:2, ilvl:64, tier_value:"23 to 26", affix_magic_name:"of Discharge"},
           {tier:1, ilvl:76, tier_value:"27 to 30", affix_magic_name:"of Arcing"},
           ]},
-          "+# Life gained for each Ignited Enemy hit by your Attacks":{poemods:"Life Gain Per Target", subtype:null, affix:"s", tiers:[
+          "+# Life gained for each Enemy hit by your Attacks":{poemods:"Life Gain Per Target", subtype:null, affix:"s", tiers:[
           {tier:4, ilvl:8, tier_value:"2", affix_magic_name:"of Rejuvenation"},
           {tier:3, ilvl:20, tier_value:"3", affix_magic_name:"of Restoration"},
           {tier:2, ilvl:30, tier_value:"4", affix_magic_name:"of Regrowth"},
@@ -6633,7 +6651,7 @@ return {
           {tier:2, ilvl:59, tier_value:"30 to 34", affix_magic_name:"of Penetrating"},
           {tier:1, ilvl:73, tier_value:"35 to 38", affix_magic_name:"of Incision"},
           ]},
-          "+# Life gained for each Ignited Enemy hit by your Attacks":{poemods:"Life Gain Per Target", subtype:null, affix:"s", tiers:[
+          "+# Life gained for each Enemy hit by your Attacks":{poemods:"Life Gain Per Target", subtype:null, affix:"s", tiers:[
           {tier:4, ilvl:8, tier_value:"2", affix_magic_name:"of Rejuvenation"},
           {tier:3, ilvl:20, tier_value:"3", affix_magic_name:"of Restoration"},
           {tier:2, ilvl:30, tier_value:"4", affix_magic_name:"of Regrowth"},
@@ -6913,7 +6931,7 @@ return {
           {tier:2, ilvl:64, tier_value:"23 to 26", affix_magic_name:"of Discharge"},
           {tier:1, ilvl:76, tier_value:"27 to 30", affix_magic_name:"of Arcing"},
           ]},
-          "+# Life gained for each Ignited Enemy hit by your Attacks":{poemods:"Life Gain Per Target", subtype:null, affix:"s", tiers:[
+          "+# Life gained for each Enemy hit by your Attacks":{poemods:"Life Gain Per Target", subtype:null, affix:"s", tiers:[
           {tier:4, ilvl:8, tier_value:"2", affix_magic_name:"of Rejuvenation"},
           {tier:3, ilvl:20, tier_value:"3", affix_magic_name:"of Restoration"},
           {tier:2, ilvl:30, tier_value:"4", affix_magic_name:"of Regrowth"},
@@ -7126,7 +7144,7 @@ return {
           {tier:2, ilvl:59, tier_value:"30 to 34", affix_magic_name:"of Penetrating"},
           {tier:1, ilvl:73, tier_value:"35 to 38", affix_magic_name:"of Incision"},
           ]},
-          "+# Life gained for each Ignited Enemy hit by your Attacks":{poemods:"Life Gain Per Target", subtype:null, affix:"s", tiers:[
+          "+# Life gained for each Enemy hit by your Attacks":{poemods:"Life Gain Per Target", subtype:null, affix:"s", tiers:[
           {tier:4, ilvl:8, tier_value:"2", affix_magic_name:"of Rejuvenation"},
           {tier:3, ilvl:20, tier_value:"3", affix_magic_name:"of Restoration"},
           {tier:2, ilvl:30, tier_value:"4", affix_magic_name:"of Regrowth"},
@@ -7331,7 +7349,7 @@ return {
           {tier:2, ilvl:59, tier_value:"30 to 34", affix_magic_name:"of Penetrating"},
           {tier:1, ilvl:73, tier_value:"35 to 38", affix_magic_name:"of Incision"},
           ]},
-          "+# Life gained for each Ignited Enemy hit by your Attacks":{poemods:"Life Gain Per Target", subtype:null, affix:"s", tiers:[
+          "+# Life gained for each Enemy hit by your Attacks":{poemods:"Life Gain Per Target", subtype:null, affix:"s", tiers:[
           {tier:4, ilvl:8, tier_value:"2", affix_magic_name:"of Rejuvenation"},
           {tier:3, ilvl:20, tier_value:"3", affix_magic_name:"of Restoration"},
           {tier:2, ilvl:30, tier_value:"4", affix_magic_name:"of Regrowth"},
@@ -7526,7 +7544,7 @@ return {
           {tier:2, ilvl:59, tier_value:"30 to 34", affix_magic_name:"of Penetrating"},
           {tier:1, ilvl:73, tier_value:"35 to 38", affix_magic_name:"of Incision"},
           ]},
-          "+# Life gained for each Ignited Enemy hit by your Attacks":{poemods:"Life Gain Per Target", subtype:null, affix:"s", tiers:[
+          "+# Life gained for each Enemy hit by your Attacks":{poemods:"Life Gain Per Target", subtype:null, affix:"s", tiers:[
           {tier:4, ilvl:8, tier_value:"2", affix_magic_name:"of Rejuvenation"},
           {tier:3, ilvl:20, tier_value:"3", affix_magic_name:"of Restoration"},
           {tier:2, ilvl:30, tier_value:"4", affix_magic_name:"of Regrowth"},
@@ -7721,7 +7739,7 @@ return {
           {tier:2, ilvl:59, tier_value:"30 to 34", affix_magic_name:"of Penetrating"},
           {tier:1, ilvl:73, tier_value:"35 to 38", affix_magic_name:"of Incision"},
           ]},
-          "+# Life gained for each Ignited Enemy hit by your Attacks":{poemods:"Life Gain Per Target", subtype:null, affix:"s", tiers:[
+          "+# Life gained for each Enemy hit by your Attacks":{poemods:"Life Gain Per Target", subtype:null, affix:"s", tiers:[
           {tier:4, ilvl:8, tier_value:"2", affix_magic_name:"of Rejuvenation"},
           {tier:3, ilvl:20, tier_value:"3", affix_magic_name:"of Restoration"},
           {tier:2, ilvl:30, tier_value:"4", affix_magic_name:"of Regrowth"},
