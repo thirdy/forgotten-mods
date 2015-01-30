@@ -27,7 +27,7 @@
 */
 
      var mods_data = getModsData()
-	 var list_of_uniques = getListOfUniques()
+     var list_of_uniques = getListOfUniques()
 	 
 	 /* Target all elements with class 'item', on poe.trade this is the <tbody> which represents one serach result item */
      var items = $('.item')
@@ -84,6 +84,7 @@
          $.each(explicit_mods, function() {
              mod = $(this).attr('data-name');
              value = $(this).attr('data-value');
+             isMasterMod = false;
 			 
              /* we skip implicit mod here */
              if (mod.lastIndexOf('$', 0) == 0) return;
@@ -100,7 +101,10 @@
              /* remove the '@' as the last character
              // this character is use to denote if the mod is a master-crafted mod
               */
-             if (endsWith(mod, '@')) mod = mod.substring(0, mod.length - 1);
+             if (endsWith(mod, '@')) {
+               mod = mod.substring(0, mod.length - 1);
+               isMasterMod = true;
+             }
 
              log(mod + " with value: " + value);
 
@@ -110,7 +114,7 @@
                  log('affix resolved to: ' + affix);
 				 if(affix == 'p') prefix_ctr++;
 				 if(affix == 's') suffix_ctr++;
-				 var mod_obj = {mod:mod, value:value, affix:affix, tier:tier, magic_name:magic_name, mod_element:mod_element};
+				 var mod_obj = {mod:mod, value:value, affix:affix, tier:tier, magic_name:magic_name, mod_element:mod_element, isMasterMod:isMasterMod};
 				 if(mod == '+# to Accuracy Rating') 	accuracy_mod 	 = mod_obj;
 				 if(mod == '#% increased Light Radius') light_radius_mod = mod_obj;
                  affixes.push(mod_obj)
@@ -119,7 +123,7 @@
 		 
 		 /* second pass, here we only resolve complex affixes */
 		 $.each(affixes, function() {
-			 if(this.mod == "#% increased Physical Damage"){
+			 if(this.mod == "#% increased Physical Damage" && !isMasterMod){
 				 phys_mod = this;
 				 /*
 					 Pseudocode for determining "% increased Physical Damage" mod
