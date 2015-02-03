@@ -37,6 +37,37 @@
          var name = $(this).find('.item-cell > h5 > a').text().trim();
          log(name);
 		 
+		 /* Setup in-game PM link */
+         var requirements_elem = $(this).find("span.requirements");
+         var isPMIGNexist = $(requirements_elem).find('a.fm-wtb').length > 0;
+       
+         if(!isPMIGNexist) {
+           var pm_msg;
+           var currency_elem = $(requirements_elem).find("span.currency");
+           var price = null;
+           if(currency_elem != null) {
+             price = $(currency_elem).text();
+             if(price != "") {
+                 price = price.substring(0, price.length - 1);
+                 var all_class = $(currency_elem).attr('class');
+                 price = price + determineCurrency(all_class);
+             }
+           }
+           var ign = $(requirements_elem).find("a[href='#']")[0].previousSibling.textContent;
+           ign = ign.trim();
+           ign = ign.substring(0, ign.length - 1);
+           ign = ign.substring(5).trim();
+           
+           if(price != "") {
+             pm_msg = '@' + ign + ' Hi, WTB your ' + name + ' for ' + price + '. You can invite me to party whenever you are free. Thanks!'
+           } else {
+             pm_msg = '@' + ign + ' Hi, WTB your ' + name + '. You can invite me to party whenever you are free. Thanks!'
+           }
+           
+           
+           $(requirements_elem).append('. <a onclick="sendPMIGN(\'' + pm_msg + '\');return false" href="#" class="fm-wtb">WTB</a>');
+         }
+		 
 		 if(isUnique(name)) return;
 
          /* Parse image url */
@@ -212,6 +243,30 @@
                      }
          });
      });
+	 
+	function sendPMIGN(pm_msg) {
+       window.prompt("Copy to clipboard: Ctrl+C, Enter", pm_msg);
+    }
+
+    function determineCurrency(all_class) {
+      if(all_class.indexOf('blessed') > -1) return 'blessed';
+      if(all_class.indexOf('chisel') > -1) return 'chis';
+      if(all_class.indexOf('chaos') > -1) return 'c';
+      if(all_class.indexOf('chromatic') > -1) return 'chrome';
+      if(all_class.indexOf('divine') > -1) return 'divine';
+      if(all_class.indexOf('exalted') > -1) return 'ex';
+      if(all_class.indexOf('gcp') > -1) return 'gcp';
+      if(all_class.indexOf('jewellers') > -1) return 'jwl';
+      if(all_class.indexOf('alchemy') > -1) return 'alc';
+      if(all_class.indexOf('alteration') > -1) return 'alt';
+      if(all_class.indexOf('chance') > -1) return 'chance';
+      if(all_class.indexOf('fusing') > -1) return 'fuse';
+      if(all_class.indexOf('regret') > -1) return 'regret';
+      if(all_class.indexOf('scouring') > -1) return 'scour';
+      if(all_class.indexOf('regal') > -1) return 'regal';
+      if(all_class.indexOf('mirror') > -1) return 'mirror';
+    }
+      
 
      function bindMouseEnterAndLeaveEvent(mod_elem) {
          $(mod_elem)
