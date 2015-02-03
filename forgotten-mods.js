@@ -57,6 +57,7 @@
            ign = ign.trim();
            ign = ign.substring(0, ign.length - 1);
            ign = ign.substring(5).trim();
+           ign = ign.replace(':', '').trim();
            
            if(price != "") {
              pm_msg = '@' + ign + ' Hi, WTB your ' + name + ' for ' + price + '. You can invite me to party whenever you are free. Thanks!'
