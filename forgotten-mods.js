@@ -1,4 +1,4 @@
-// Path of Exile Forgotten Mods 0.8.0 - A simple bookmarklet that will augment poe.trade with more info.
+// Path of Exile Forgotten Mods 0.8.1 - A simple bookmarklet that will augment poe.trade with more info.
 // Check out the forum thread - http://www.pathofexile.com/forum/edit-thread/1164052
 // PM me in game: ManicCompression
 // Code prettyfied by http://jsbeautifier.org/
