@@ -30,7 +30,13 @@
      var list_of_uniques = getListOfUniques()
 	 
 	 /* Target all elements with class 'item', on poe.trade this is the <tbody> which represents one serach result item */
-     var items = $('.item')
+     var items = $('.item');
+     
+     /* League Name */
+     var league = $('h3.title a').text();
+     league = league.substring(league.indexOf('//') + 2).trim();
+     league = league.split(/\s/)[0];
+     log(league)
 
      $.each(items, function() {
          /* Parse Item Name */
@@ -42,7 +48,7 @@
          var isPMIGNexist = $(requirements_elem).find('a.fm-wtb').length > 0;
        
          if(!isPMIGNexist) {
-           var pm_msg;
+           var pm_msg = "";
            var currency_elem = $(requirements_elem).find("span.currency");
            var price = null;
            if(currency_elem != null) {
@@ -59,11 +65,24 @@
            ign = ign.substring(5).trim();
            ign = ign.replace(':', '').trim();
            
+           var fm_options_elem = $('fm_options_elem');
+           log('fm_options_elem:', fm_options_elem);
            if(price != "") {
-             pm_msg = '@' + ign + ' Hi, WTB your ' + name + ' for ' + price + '. You can invite me to party whenever you are free. Thanks!'
+             pm_msg = '@{ign} Hi, WTB your {item} for {price} in {league}. You can invite me to party whenever you are free. Thanks!'
+             if(fm_options_elem.length){
+               pm_msg = $(fm_options_elem).attr('wtbpm_template');
+             }
            } else {
-             pm_msg = '@' + ign + ' Hi, WTB your ' + name + '. You can invite me to party whenever you are free. Thanks!'
+             pm_msg = '@{ign} Hi, WTB your {item} in {league}. You can invite me to party whenever you are free. Thanks!'
+             if(fm_options_elem.length){
+               pm_msg = $(fm_options_elem).attr('wtbpmwoprice_template');
+             }
            }
+           
+           pm_msg = pm_msg.replace('{ign}', ign);
+           pm_msg = pm_msg.replace('{item}', name);
+           pm_msg = pm_msg.replace('{price}', price);
+           pm_msg = pm_msg.replace('{league}', league);
            
            
            $(requirements_elem).append('. <a onclick="sendPMIGN(\'' + pm_msg + '\');return false" href="#" class="fm-wtb">WTB</a>');
