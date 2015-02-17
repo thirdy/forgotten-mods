@@ -18,3 +18,6 @@ Screenshot:
 Runs as a Chrome Extension or a simple browser bookmark. When you do a search with poe.trade, the tool runs automatically (or click your bookmark) and you'll see some valuable information as you can see in the screenshot.
 
 See more details at the [official forum thread](https://www.pathofexile.com/forum/view-thread/1164052).
+
+
+Source code is licensed with GPL2. Note that this is a fan-made tool and is not affiliated with Grinding Gear Games or poe.trade in any way.
